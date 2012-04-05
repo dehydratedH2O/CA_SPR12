@@ -189,99 +189,30 @@ int Converter::convertToMachine(void)
                     return 1;
                 }
 
-                switch(rd[2])
-                {
-                    case '0':
-                        binary.append("000");
-                        break;
-                    case '1':
-                        binary.append("001");
-                        break;
-                    case '2':
-                        binary.append("010");
-                        break;
-                    case '3':
-                        binary.append("011");
-                        break;
-                    case '4':
-                        binary.append("100");
-                        break;
-                    case '5':
-                        binary.append("101");
-                        break;
-                    case '6':
-                        binary.append("110");
-                        break;
-                    case '7':
-                        binary.append("111");
-                        break;
-                    default:
-                        cout << "bad register number!" << endl;
-                        return;
-                } //end rd switch
+                int iRd, iRs, iRt;
+                string bRd,bRs,bRt;
 
-                switch(rs[2])
-                {
-                    case '0':
-                        binary.append("000");
-                        break;
-                    case '1':
-                        binary.append("001");
-                        break;
-                    case '2':
-                        binary.append("010");
-                        break;
-                    case '3':
-                        binary.append("011");
-                        break;
-                    case '4':
-                        binary.append("100");
-                        break;
-                    case '5':
-                        binary.append("101");
-                        break;
-                    case '6':
-                        binary.append("110");
-                        break;
-                    case '7':
-                        binary.append("111");
-                        break;
-                    default:
-                        cout << "bad register number!" << endl;
-                        return;
-                } //end rs switch
+                iRd = atoi(rd[2]);
+                iRs = atoi(rs[2]);
+                iRt = atoi(rt[2]);
 
-                switch(rt[2])
+                if (iRd < 0) || (iRd > 7) || (iRs < 0) || (iRs > 7) || (iRt < 0) || (iRt > 7)
                 {
-                    case '0':
-                        binary.append("000");
-                        break;
-                    case '1':
-                        binary.append("001");
-                        break;
-                    case '2':
-                        binary.append("010");
-                        break;
-                    case '3':
-                        binary.append("011");
-                        break;
-                    case '4':
-                        binary.append("100");
-                        break;
-                    case '5':
-                        binary.append("101");
-                        break;
-                    case '6':
-                        binary.append("110");
-                        break;
-                    case '7':
-                        binary.append("111");
-                        break;
-                    default:
-                        cout << "bad register number!" << endl;
-                        return;
-                } //end rt switch
-    
+                    cout << "bad register number!" << endl;
+                    return 1;
+                }
+                
+                bRd = toBinary(iRd);
+                bRs = toBinary(iRs);
+                bRt = toBinary(iRt);
+
+                //TODO
+                //add padding zeros
+
+                binary.append(bRd);
+                binary.append(bRs);
+                binary.append(bRt);
+
                 //registers finished, so append func
                 binary.append(func);
 
@@ -300,68 +231,27 @@ int Converter::convertToMachine(void)
                     return 1;
                 }
 
-                switch(rs[2])
-                {
-                    case '0':
-                        binary.append("000");
-                        break;
-                    case '1':
-                        binary.append("001");
-                        break;
-                    case '2':
-                        binary.append("010");
-                        break;
-                    case '3':
-                        binary.append("011");
-                        break;
-                    case '4':
-                        binary.append("100");
-                        break;
-                    case '5':
-                        binary.append("101");
-                        break;
-                    case '6':
-                        binary.append("110");
-                        break;
-                    case '7':
-                        binary.append("111");
-                        break;
-                    default:
-                        cout << "bad register number!" << endl;
-                        return;
-                } //end rs switch
+                int iRt, iRs;
+                string bRt,bRst;
 
-                switch(rt[2])
+                iRs = atoi(rs[2]);
+                iRt = atoi(rt[2]);
+
+                if (iRs < 0) || (iRs > 7) || (iRt < 0) || (iRt > 7)
                 {
-                    case '0':
-                        binary.append("000");
-                        break;
-                    case '1':
-                        binary.append("001");
-                        break;
-                    case '2':
-                        binary.append("010");
-                        break;
-                    case '3':
-                        binary.append("011");
-                        break;
-                    case '4':
-                        binary.append("100");
-                        break;
-                    case '5':
-                        binary.append("101");
-                        break;
-                    case '6':
-                        binary.append("110");
-                        break;
-                    case '7':
-                        binary.append("111");
-                        break;
-                    default:
-                        cout << "bad register number!" << endl;
-                        return;
-                } //end rt switch
-    
+                    cout << "bad register number!" << endl;
+                    return 1;
+                }
+                
+                bRs = toBinary(iRs);
+                bRt = toBinary(iRt);
+
+                //TODO
+                //add padding zeros
+
+                binary.append(bRs);
+                binary.append(bRt);
+
                 //handle immediate
                 int iImm;
                 string bImm;
