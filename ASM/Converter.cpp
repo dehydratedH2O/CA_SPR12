@@ -4,6 +4,17 @@ using namespace std;
 
 #define FILEPATH ../testASM
 
+string binary(int n)
+{
+    string result;
+
+    do result.push_back( '0' + (n & 1) );
+    while (n >>= 1);
+
+    reverse( result.begin(), result.end() );
+    return result;
+}
+
 int Converter::parseInput(string filepath)
 {
     string temp;
@@ -352,13 +363,21 @@ int Converter::convertToMachine(void)
                 } //end rt switch
     
                 //handle immediate
-                //TODO
+                int iImm;
+                string bImm;
+                iImm = atoi(imm.c_str());
+                bImm = toBinary(iImm);
+                binary.append(bImm);
                 
                 break;
             case 'J':
 
                 //handle address in operands
-                //TODO
+                int iAddr;
+                string bAddr;
+                iAddr = atoi(operands.c_str());
+                bAddr = toBinary(iAddr);
+                binary.append(bAddr);
 
                 break;
             default:

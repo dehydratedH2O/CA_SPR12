@@ -12,6 +12,8 @@ class Converter
 		vector<string> asmCode;
 		vector<string> machineCode;
 		extern vector<MEMSlot> IMEM;
+
+        string toBinary(int n);
 		
 	public:
 		//Constructor
