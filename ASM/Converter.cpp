@@ -6,6 +6,8 @@ using namespace std;
 
 string binary(int n)
 {
+    //TODO
+    //handle negatives
     string result;
 
     do result.push_back( '0' + (n & 1) );
