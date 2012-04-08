@@ -35,7 +35,9 @@ int ID::doJump(void)
 
 int ID::getRegistersFromFile(void)
 {
+	tmpWReg = instruction.substr(4, 3);
 	
+	//CODE GOES HERE TO GET REGISTERS FROM FILE
 }
 
 int ID::signExtendImmediate(void)

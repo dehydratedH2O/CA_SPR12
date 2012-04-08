@@ -19,9 +19,18 @@ int WB::setRegVals(void)
 	}
 	else wVal = ALUResult;
 	
-	//CODE TO STORE IN REGS GOES HERE
+	string writeToReg = Regs[11].data;
+	for(int i = 0; i < 8; i++)
+	{
+		if(Regs[i].location == writeToReg)
+		{
+			Regs[i].data = wVal;
+			return 0;
+		}
+	}
 	
-	return 0;
+	//INVALID REG ADDRESS
+	return -1;
 }
 
 void WB::perform(void)
