@@ -22,6 +22,7 @@ int main()
 	int MAXMEM = //highest imem memory location in program
 	vector<MEMSlot> IMEM;
 	vector<MEMSlot> DMEM;
+	vector<MEMSlot> Regs;
 	
 	//INITIALIZE DMEM
 	for(int i = 0; i < 65536; i = i + 2)
@@ -141,8 +142,72 @@ int main()
 		DMEM.push_back(a);
 	}
 	
+	//INITIALIZE REGISTERS
+	MemSlot b;
+	b.location = "000";
+	b.data = "0000000000000000";
+	MemSlot c;
+	c.location = "001";
+	c.data = "0000000000000000";
+	MemSlot d;
+	d.location = "010";
+	d.data = "0000000000000000";
+	MemSlot e;
+	e.location = "011";
+	e.data = "0000000000000000";
+	MemSlot f;
+	f.location = "100";
+	f.data = "0000000000000000";
+	MemSlot g;
+	g.location = "101";
+	g.data = "0000000000000000";
+	MemSlot h;
+	h.location = "110";
+	h.data = "0000000000000000";
+	MemSlot n;
+	n.location = "111";
+	n.data = "0000000000000000";
+	
+	Regs.push_back(b);
+	Regs.push_back(c);
+	Regs.push_back(d);
+	Regs.push_back(e);
+	Regs.push_back(f);
+	Regs.push_back(g);
+	Regs.push_back(h);
+	Regs.push_back(n);
+	
+	//INITIALIZE REGS SHORT TERM MEMORY
+	//This is a layer of cache attatched to the registers
+	//that stores data associated with which register
+	//should be written to by associating it with the
+	//pipeline phase that it is currently in
+	
+	MemSlot j;
+	MemSlot k;
+	MemSlot l;
+	MemSlot m;
+	
+	j.location = "ID";
+	j.data = "";
+	k.location = "EX";
+	k.data = "";
+	l.location = "MEM";
+	l.data = "";
+	m.location = "WB";
+	m.data = "";
+	
+	Regs.push_back(j);
+	Regs.push_back(k);
+	Regs.push_back(l);
+	Regs.push_back(m);
+	
+	string tmpWReg = "";
+	
+	//Create converter
 	Converter converter;
 	
+	//Convert ASM and store in IMEM
 	converter.parseInput("");
 	converter.convertToMachine();
 	converter.createIMEM();
@@ -201,4 +266,10 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	
 	//Set IF Inputs
 	dIF->setPC();
+	
+	//Shift Regs MEM
+	Regs[11].data = Regs[10].data;
+	Regs[10].data = Regs[9].data;
+	Regs[9].data = Regs[8].data;
+	Regs[8].data = tmpWReg;
 }
