@@ -13,7 +13,7 @@ class Converter
 		vector<string> machineCode;
 		extern vector<MEMSlot> IMEM;
 
-        string toBinary(int n);
+        string itob(int n, int l);
 		
 	public:
 		//Constructor

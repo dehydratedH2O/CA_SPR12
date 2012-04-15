@@ -4,16 +4,46 @@ using namespace std;
 
 #define FILEPATH ../testASM
 
-string binary(int n)
+string itob(int n, int l)
 {
-    //TODO
-    //handle negatives
+    bool neg;
     string result;
+
+    if (n < 0)
+        neg = true;
+    else
+        neg = false;
+
+    if (neg)
+    {
+        //do 2's complement
+        n = ~n;
+        n++;
+    }
 
     do result.push_back( '0' + (n & 1) );
     while (n >>= 1);
 
     reverse( result.begin(), result.end() );
+
+    //pad
+    if (result.length() < l)
+    {
+        for (int i = 0; i < (l - result.length()); i++)
+        {
+            if (neg)
+                result.insert(0,'1');
+            else
+                result.insert(0,'0');
+        }
+    }
+
+    if (result.length() > l)
+    //result overflow!
+    {
+        cout << "ERROR: binary representation of " << n << " bigger than " << l " bits!" << endl;
+    }
+
     return result;
 }
 
@@ -204,12 +234,9 @@ int Converter::convertToMachine(void)
                     return 1;
                 }
                 
-                bRd = toBinary(iRd);
-                bRs = toBinary(iRs);
-                bRt = toBinary(iRt);
-
-                //TODO
-                //add padding zeros
+                bRd = itob(iRd,3);
+                bRs = itob(iRs,3);
+                bRt = itob(iRt,3);
 
                 binary.append(bRd);
                 binary.append(bRs);
@@ -245,11 +272,8 @@ int Converter::convertToMachine(void)
                     return 1;
                 }
                 
-                bRs = toBinary(iRs);
-                bRt = toBinary(iRt);
-
-                //TODO
-                //add padding zeros
+                bRs = itob(iRs,3);
+                bRt = itob(iRt,3);
 
                 binary.append(bRs);
                 binary.append(bRt);
@@ -258,7 +282,7 @@ int Converter::convertToMachine(void)
                 int iImm;
                 string bImm;
                 iImm = atoi(imm.c_str());
-                bImm = toBinary(iImm);
+                bImm = itob(iImm,6);
                 binary.append(bImm);
                 
                 break;
@@ -268,7 +292,7 @@ int Converter::convertToMachine(void)
                 int iAddr;
                 string bAddr;
                 iAddr = atoi(operands.c_str());
-                bAddr = toBinary(iAddr);
+                bAddr = itob(iAddr,12);
                 binary.append(bAddr);
 
                 break;
