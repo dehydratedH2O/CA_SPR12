@@ -21,6 +21,9 @@ class EX
 		//Both
 		string control;
 
+        //logic
+        int btoi (char* str);
+
 	public:
 		//Contructor
 		EX();

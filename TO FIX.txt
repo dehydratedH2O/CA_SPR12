@@ -1,7 +1,7 @@
---sending 0 or 1 output to WB phase for sgt/slt/sge/sle
---PC needs to go thru all phases?
+--sending 0 or 1 output to WB phase for sgt/slt/sge/sle ~from ALU?~ -m
+--PC needs to go thru all phases? ~yes - pipe it though~ -matt
   --PC incoming value for IF
---threading code in driver.cpp
---getRegistersFromFile()
---location stored in decimal
+--threading code in driver.cpp ~if we can get away with it, i'd rather not~ -m
+--getRegistersFromFile() ~explain at meeting please~ -m
+--location stored in decimal ~also explain at meeting~ -m
   --data stored in binary
