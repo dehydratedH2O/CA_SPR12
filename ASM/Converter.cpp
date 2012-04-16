@@ -41,7 +41,7 @@ string itob(int n, int l)
     if (result.length() > l)
     //result overflow!
     {
-        cout << "ERROR: binary representation of " << n << " bigger than " << l " bits!" << endl;
+        cout << "ERROR: binary representation of " << n << " bigger than " << l << " bits!" << endl;
     }
 
     return result;

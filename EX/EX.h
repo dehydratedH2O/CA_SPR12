@@ -23,6 +23,7 @@ class EX
 
         //logic
         int btoi (char* str);
+        string itob (int n, int l);
 
 	public:
 		//Contructor
