@@ -1,5 +1,5 @@
 #include <string>
-#include <stringstream>
+#include <sstream>
 #include <vector>
 
 #include "ASM/Converter.h"
