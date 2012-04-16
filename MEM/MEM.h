@@ -35,6 +35,6 @@ class MEM
 		int storeToMem(void);
 		string loadFromMem(void);
 		void perform(void);
-}
+};
 		
 #endif

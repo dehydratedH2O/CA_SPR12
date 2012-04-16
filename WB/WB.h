@@ -26,6 +26,6 @@ class WB
 		int setRegVals(void);
 		void perform(void);
 		
-}
+};
 
 #endif

@@ -43,6 +43,6 @@ class EX
 		int doBranch(void);
 		int ALUCompute(void);
 		void perform(void);
-}
+};
 
 #endif

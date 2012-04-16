@@ -40,6 +40,6 @@ class ID
 		int getRegistersFromFile(void);
 		int signExtendImmediate(void);
 		void perform(void);
-}	
+};	
 
 #endif

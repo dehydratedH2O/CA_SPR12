@@ -30,6 +30,6 @@ class IF
 		int getInstruction(void);
 		int incrementPC(void);
 		void perform(void);
-}
+};
 
 #endif
