@@ -17,18 +17,18 @@ EX::EX(void)
 
 void EX::perform(void)
 {
-	int rc = doBranch();
-	if(rc == -1)
-	{
-		cout << "ERROR IN EXECUTE." << endl;
-		cout << "ERROR IN BRANCH DECISION/EXECUTION." << endl;
-	}
-	
 	rc = ALUCompute();
 	if(rc == -1)
 	{
 		cout << "ERROR IN EXECUTE." << endl;
 		cout << "ERROR IN ALU COMPUTATION." << endl;
+	}
+
+	int rc = doBranch();
+	if(rc == -1)
+	{
+		cout << "ERROR IN EXECUTE." << endl;
+		cout << "ERROR IN BRANCH DECISION/EXECUTION." << endl;
 	}
 }
 
@@ -247,4 +247,21 @@ int ALUCompute(void)
             return 1;
     }
     ALUResult = itob(result, 16);
+    return 0;
+}
+
+int doBranch(void)
+{
+    if (control[11] == '1')
+    {
+        string hi9 = PCin.substr(0,9);
+        string lo7 = signExtendedImmiediate.substr(8,7);
+        lo7.append("0");
+        lo7 = lo7.substr(0,7);
+        hi9.append(lo7);
+        PCout = hi9;
+    }
+    else
+        PCout = PCin;
+    return 0;
 }
