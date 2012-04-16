@@ -9,8 +9,17 @@
 #include "EX/EX.h"
 #include "MEM/MEM.h"
 #include "WB/WB.h"
+#include "UTIL/utils.h"
 
 using namespace std;
+
+int currentPC;
+
+void transfer(IF*,ID*,EX*,MEM*,WB*);
+
+vector<MEMSlot> Regs;
+
+string tmpWReg;
 
 int main()
 {
@@ -18,19 +27,19 @@ int main()
 	//AS WELL AS STORE MACHINE INSTRUCTIONS
 	//IN IMEM
 	
-	string INITIAL_PC = "0000000000000000";
-	int MAXMEM = //highest imem memory location in program
+	int MAXMEM = 4096; //highest imem memory location in program
 	vector<MEMSlot> IMEM;
 	vector<MEMSlot> DMEM;
-	vector<MEMSlot> Regs;
+	currentPC = 0;
+	tmpWReg = "";
 	
 	//INITIALIZE DMEM
-	for(int i = 0; i < 65536; i = i + 2)
+	for(int i = 4096; i < 65536; i = i + 2)
 	{
 		int tmp = i;
-		MemSlot a;
-		a.location = 0;
-		a.data = 0;
+		MEMSlot a;
+		a.location = "0";
+		a.data = "0";
 		string loc = "";
 		
 		if(tmp >= 32768)
@@ -143,28 +152,28 @@ int main()
 	}
 	
 	//INITIALIZE REGISTERS
-	MemSlot b;
+	MEMSlot b;
 	b.location = "000";
 	b.data = "0000000000000000";
-	MemSlot c;
+	MEMSlot c;
 	c.location = "001";
 	c.data = "0000000000000000";
-	MemSlot d;
+	MEMSlot d;
 	d.location = "010";
 	d.data = "0000000000000000";
-	MemSlot e;
+	MEMSlot e;
 	e.location = "011";
 	e.data = "0000000000000000";
-	MemSlot f;
+	MEMSlot f;
 	f.location = "100";
 	f.data = "0000000000000000";
-	MemSlot g;
+	MEMSlot g;
 	g.location = "101";
 	g.data = "0000000000000000";
-	MemSlot h;
+	MEMSlot h;
 	h.location = "110";
 	h.data = "0000000000000000";
-	MemSlot n;
+	MEMSlot n;
 	n.location = "111";
 	n.data = "0000000000000000";
 	
@@ -183,10 +192,10 @@ int main()
 	//should be written to by associating it with the
 	//pipeline phase that it is currently in
 	
-	MemSlot j;
-	MemSlot k;
-	MemSlot l;
-	MemSlot m;
+	MEMSlot j;
+	MEMSlot k;
+	MEMSlot l;
+	MEMSlot m;
 	
 	j.location = "ID";
 	j.data = "";
@@ -201,8 +210,6 @@ int main()
 	Regs.push_back(k);
 	Regs.push_back(l);
 	Regs.push_back(m);
-	
-	string tmpWReg = "";
 	
 	//Create converter
 	Converter converter;
@@ -221,11 +228,11 @@ int main()
 	while(currentPC < MAXMEM)
 	{
 		//THREADING CODE NEEDED HERE
-		dIF->perform(void);
-		dID->perform(void);
-		dEX->perform(void);
-		dMEM->perform(void);
-		dWB->perform(void);
+		dIF->perform();
+		dID->perform();
+		dEX->perform();
+		dMEM->perform();
+		dWB->perform();
 		
 		transfer(dIF, dID, dEX, dMEM, dWB);
 	}
@@ -265,7 +272,7 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	dID->setControl(dIF->getControl());
 	
 	//Set IF Inputs
-	dIF->setPC();
+	dIF->setPC(itob(currentPC,16));
 	
 	//Shift Regs MEM
 	Regs[11].data = Regs[10].data;

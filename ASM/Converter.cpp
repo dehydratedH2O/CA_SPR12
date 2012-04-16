@@ -24,7 +24,7 @@ string itob(int n, int l)
     do result.push_back( '0' + (n & 1) );
     while (n >>= 1);
 
-    reverse( result.begin(), result.end() );
+    result.reverse( result.begin(), result.end() );
 
     //pad
     if (result.length() < l)

@@ -7,14 +7,15 @@
 
 using namespace std;
 
+extern vector<MEMSlot> IMEM;
+
 class Converter
 {
 	private:
 		vector<string> asmCode;
 		vector<string> machineCode;
-		extern vector<MEMSlot> IMEM;
 
-        string itob(int n, int l);
+
 		
 	public:
 		//Constructor
@@ -23,6 +24,7 @@ class Converter
 		int parseInput(string);
 		int convertToMachine(void);
 		int createIMEM(void);
+		string itob(int n, int l);
 };
 
 #endif

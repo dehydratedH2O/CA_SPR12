@@ -27,7 +27,7 @@ class IF
 		void setPC(string a) {PC = a;}
 		
 		//Functions
-		int getInstruction(void);
+		int fetchInstruction(void);
 		int incrementPC(void);
 		void perform(void);
 };

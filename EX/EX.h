@@ -33,6 +33,7 @@ class EX
 		string getALUResult(void) {return ALUResult;}
 		string getPCout(void) {return PCout;}
 		string getControl(void) {return control;}
+		string getRTVal(void) {return RTVal;}
 		void setRSVal(string a) {RSVal = a;}
 		void setRTVal(string a) {RTVal = a;}
 		void setSignExtendedImmediate(string a) {signExtendedImmediate = a;}

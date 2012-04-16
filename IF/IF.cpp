@@ -15,7 +15,7 @@ IF::IF (void)
 	control = "";
 }
 	
-int IF::getInstruction(void)
+int IF::fetchInstruction(void)
 {
 	if(atoi(PC) > MAXMEM)
 		return -1;
@@ -28,7 +28,7 @@ int IF::getInstruction(void)
 	
 	instruction = IMEM[vecloc].data;
 	
-	return;
+	return 0;
 }
 
 int IF::incrementPC(void)
