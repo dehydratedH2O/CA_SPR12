@@ -1,6 +1,12 @@
 #include <string>
+#include <vector>
+#include <iostream>
+#include "MEM.h"
+#include "../UTIL/MEMSlot.h"
 
 using namespace std;
+
+extern vector<MEMSlot> DMEM;
 
 MEM::MEM(void)
 {

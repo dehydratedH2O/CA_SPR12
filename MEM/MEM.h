@@ -33,7 +33,7 @@ class MEM
 		
 		//Functions
 		int storeToMem(void);
-		string loadFromMem(void);
+		int loadFromMem(void);
 		void perform(void);
 };
 		
