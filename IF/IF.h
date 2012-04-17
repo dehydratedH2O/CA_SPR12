@@ -30,6 +30,7 @@ class IF
 		int fetchInstruction(void);
 		int incrementPC(void);
 		void perform(void);
+		int determineControlSignals(void);
 };
 
 #endif

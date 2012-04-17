@@ -1,14 +1,20 @@
 #include <string>
+#include <iostream>
+#include <vector>
+#include "IF.h"
+#include "../UTIL/MEMSlot.h"
+#include "../UTIL/utils.h"
 
 using namespace std;
 
-extern INITIAL_PC;
-extern MAXMEM;
+extern int MAXMEM;
+extern vector<MEMSlot> IMEM;
+extern int BANDWIDTH;
 
 //CONSTRUCTOR
 IF::IF (void)
 {
-	PC = INITIAL_PC;
+	PC = "0000000000000000";
 	
 	incPC = "";
 	instruction = "";
@@ -17,13 +23,13 @@ IF::IF (void)
 	
 int IF::fetchInstruction(void)
 {
-	if(atoi(PC) > MAXMEM)
+	if(btoi(PC.c_str()) > MAXMEM)
 		return -1;
 		
-	if(atoi(PC) < 0)
+	if(btoi(PC.c_str()) < 0)
 		return -1;
 	
-	int location = atoi(PC);
+	int location = btoi(PC.c_str());
 	int vecloc = location/2;
 	
 	instruction = IMEM[vecloc].data;
@@ -33,13 +39,13 @@ int IF::fetchInstruction(void)
 
 int IF::incrementPC(void)
 {
-	int PCval = atoi(PC);
+	int PCVal = btoi(PC.c_str());
 	
 	if(PCVal > 0xFFFB)
 		return -1;
 	else PCVal = PCVal + 2;
 	
-	incPC = intToString(PCVal);
+	incPC = itob(PCVal,16);
 	
 	return 0;
 }
@@ -134,7 +140,7 @@ int IF::determineControlSignals(void)
 	string instr = "";
 	for(int i = 0; i < BANDWIDTH; i++)
 	{
-		instr += instruction[i].value;
+		instr += instruction[i];
 	}
 	
 	string opcode = instr.substr(0, 4);
@@ -199,13 +205,13 @@ int IF::determineControlSignals(void)
 	if(opcode == "1101")
 		controlSignals = "0000000000100";
 		
-	control = controlStrings;
+	control = controlSignals;
 	return 0;
 }
 
 void IF::perform(void)
 {
-	int rc = getInstruction();
+	int rc = fetchInstruction();
 	if(rc == -1)
 	{
 		cout << "ERROR IN INSTRUCTION FETCH." << endl;
