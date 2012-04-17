@@ -1,10 +1,13 @@
 #include <iostream>
+#include <fstream>
+#include <cstring>
+#include "Converter.h"
 
 using namespace std;
 
-#define FILEPATH ../testASM
+#define FILEPATH "../testASM"
 
-string itob(int n, int l)
+string Converter::itob(int n, int l)
 {
     bool neg;
     string result;
@@ -24,7 +27,7 @@ string itob(int n, int l)
     do result.push_back( '0' + (n & 1) );
     while (n >>= 1);
 
-    result.reverse( result.begin(), result.end() );
+    reverse( result.begin(), result.end() );
 
     //pad
     if (result.length() < l)
@@ -32,9 +35,9 @@ string itob(int n, int l)
         for (int i = 0; i < (l - result.length()); i++)
         {
             if (neg)
-                result.insert(0,'1');
+                result.insert(0,"1");
             else
-                result.insert(0,'0');
+                result.insert(0,"0");
         }
     }
 
@@ -50,16 +53,16 @@ string itob(int n, int l)
 int Converter::parseInput(string filepath)
 {
     string temp;
+    ifstream fin;
 
-	if((filepath == NULL) || (filepath == ""))
-		filepath = FILEPATH;
+    if (filepath == "")
+        filepath = FILEPATH;
 	
     //exception handling for input
-	ifstream fin;
     fin.exceptions(ifstream::failbit|ifstream::badbit);
     try
     {
-	    fin.open(filepath);
+	    fin.open(filepath.c_str());
 
     	//PARSE ASM FROM TXT HERE
         while(getline(fin,temp))
@@ -78,15 +81,20 @@ int Converter::parseInput(string filepath)
 
 int Converter::convertToMachine(void)
 {
-    str opcode, operands, binary, func;
+    string opcode, operands, binary, func;
+    int currPos, nextPos;
     char type;
 
 	for(int i = 0; i < asmCode.size(); i++)
 	{
-		//CODE TO CONVERT EACH ASM LINE INTO MACHINE CODE GOES HERE
-	    //first split into opcode and operands
-        opcode = strtok(asmCode[i],' ');
-        operands = strtok(asmCode[i],' ');
+	//CODE TO CONVERT EACH ASM LINE INTO MACHINE CODE GOES HERE
+        //first split into opcode and operands
+	currPos = 0;
+	nextPos = asmCode[i].find_first_of(" ",currPos);
+        opcode = asmCode[i].substr(currPos,nextPos-currPos);
+	currPos = nextPos;
+	nextPos = (asmCode.size()-1);//asmCode[i].find_first_of(" ",currPos);
+        operands = asmCode[i].substr(currPos,nextPos-currPos);
         binary = "";
         cout << "found opcode " << opcode << " with operands " << operands << endl;
         switch (opcode)
