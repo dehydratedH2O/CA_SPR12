@@ -1,6 +1,12 @@
 #include <string>
+#include <vector>
+#include <iostream>
+#include "WB.h"
+#include "../UTIL/MEMSlot.h"
 
 using namespace std;
+
+extern vector<MEMSlot> Regs;
 
 WB::WB(void)
 {
