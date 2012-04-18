@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <sstream>
 #include "Converter.h"
 
 using namespace std;
@@ -214,11 +215,17 @@ int Converter::convertToMachine(void)
                 return 1;
         } // end switch
         //now switch on type
-        switch(type)
+	string rd, rs, rt, imm;
+	string rdstr, rsstr, rtstr;
+        string bRd,bRs,bRt, bRst;
+	int iRs, iRt, iRd;
+        string bImm, bAddr;
+        
+	switch(type)
         {
             case 'R':
-                string rd,rs,rt;
-                int currPos, nextPos;
+                //string rd,rs,rt;
+                //int currPos, nextPos;
                 currPos = 0;
                 nextPos = operands.find_first_of(',',currPos);
                 rd = operands.substr(currPos,nextPos-currPos);
@@ -230,20 +237,28 @@ int Converter::convertToMachine(void)
                 rt = operands.substr(currPos,nextPos-currPos);
                 
                 //make sure they're registers
-                if (rd[0] != '$') || (rd[1] != 'r') || (rs[0] != '$') || (rs[1] != 'r') || (rt[0] != '$') || (rt[1] != 'r')
+                if((rd[0] != '$') || (rd[1] != 'r') || (rs[0] != '$') || (rs[1] != 'r') || (rt[0] != '$') || (rt[1] != 'r'))
                 {
                     cout << "bad operand!" << endl;
                     return 1;
                 }
 
-                int iRd, iRs, iRt;
-                string bRd,bRs,bRt;
+                //int iRd, iRs, iRt;
 
-                iRd = atoi(rd[2]);
-                iRs = atoi(rs[2]);
-                iRt = atoi(rt[2]);
 
-                if (iRd < 0) || (iRd > 7) || (iRs < 0) || (iRs > 7) || (iRt < 0) || (iRt > 7)
+		rdstr = "";
+		rsstr = "";
+		rtstr = "";
+		rdstr += rd[2];
+		rsstr += rs[2];
+		rtstr += rt[2];
+
+
+                iRd = atoi(rdstr.c_str());
+                iRs = atoi(rsstr.c_str());
+                iRt = atoi(rtstr.c_str());
+
+                if((iRd < 0) || (iRd > 7) || (iRs < 0) || (iRs > 7) || (iRt < 0) || (iRt > 7))
                 {
                     cout << "bad register number!" << endl;
                     return 1;
@@ -263,8 +278,8 @@ int Converter::convertToMachine(void)
                 //finished
                 break;
             case 'I':
-                string rs, rt, imm;
-                int currPos, nextPos;
+                //string rs, rt, imm;
+                //int currPos, nextPos;
                 currPos = 0;
                 nextPos = operands.find_first_of(',',currPos);
                 rs = operands.substr(currPos,nextPos-currPos);
@@ -276,19 +291,23 @@ int Converter::convertToMachine(void)
                 imm = operands.substr(currPos,nextPos-currPos);
 
                 //make sure they're registers
-                if (rs[0] != '$') || (rs[1] != 'r') || (rt[0] != '$') || (rt[1] != 'r')
+                if((rs[0] != '$') || (rs[1] != 'r') || (rt[0] != '$') || (rt[1] != 'r'))
                 {
                     cout << "bad operand!" << endl;
                     return 1;
                 }
 
-                int iRt, iRs;
-                string bRt,bRst;
+                //int iRt, iRs;
 
-                iRs = atoi(rs[2]);
-                iRt = atoi(rt[2]);
+		rsstr = "";
+		rtstr = "";
+		rsstr += rs[2];
+		rtstr += rt[2];
 
-                if (iRs < 0) || (iRs > 7) || (iRt < 0) || (iRt > 7)
+                iRs = atoi(rsstr.c_str());
+                iRt = atoi(rtstr.c_str());
+
+                if((iRs < 0) || (iRs > 7) || (iRt < 0) || (iRt > 7))
                 {
                     cout << "bad register number!" << endl;
                     return 1;
@@ -302,7 +321,6 @@ int Converter::convertToMachine(void)
 
                 //handle immediate
                 int iImm;
-                string bImm;
                 iImm = atoi(imm.c_str());
                 bImm = itob(iImm,6);
                 binary.append(bImm);
@@ -312,7 +330,6 @@ int Converter::convertToMachine(void)
 
                 //handle address in operands
                 int iAddr;
-                string bAddr;
                 iAddr = atoi(operands.c_str());
                 bAddr = itob(iAddr,12);
                 binary.append(bAddr);
@@ -336,7 +353,11 @@ int Converter::createIMEM(void)
 		MEMSlot MemSlot;
 		MemSlot.data = machineCode[i];
 		int memLoc = 2 * i;
-		MemSlot.location = intToString(memLoc);
+
+		stringstream s;
+		s << memLoc;
+
+		MemSlot.location = s.str();
 		IMEM.push_back(MemSlot);
 	}
 }
