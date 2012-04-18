@@ -225,3 +225,6 @@ void IF::perform(void)
 		cout << "ERROR IN INCREMENTING PC." << endl;
 	}
 }
+
+int main(void)
+{ cout << "test" << endl; }

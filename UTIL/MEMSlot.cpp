@@ -7,4 +7,4 @@ class MEMSlot
 	public:
 		string location;
 		string data;
-}
+};
