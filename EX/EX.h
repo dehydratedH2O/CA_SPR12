@@ -2,6 +2,7 @@
 #define EX_H
 
 #include <string>
+#include "../UTIL/utils.h"
 
 using namespace std;
 
