@@ -264,9 +264,16 @@ int Converter::convertToMachine(void)
                 break;
             case 'I':
                 string rs, rt, imm;
-                rs = strtok(operands,',');
-                rt = strtok(operands,',');
-                imm = strtok(operands',');
+                int currPos, nextPos;
+                currPos = 0;
+                nextPos = operands.find_first_of(',',currPos);
+                rs = operands.substr(currPos,nextPos-currPos);
+                currPos = nextPos;
+                nextPos = operands.find_first_of(',',currPos);
+                rt = operands.substr(currPos,nextPos-currPos);
+                currPos = nextPos;
+                nextPos = operands.find_first_of(',',currPos);
+                imm = operands.substr(currPos,nextPos-currPos);
 
                 //make sure they're registers
                 if (rs[0] != '$') || (rs[1] != 'r') || (rt[0] != '$') || (rt[1] != 'r')
