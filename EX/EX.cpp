@@ -1,4 +1,6 @@
 #include <string>
+#include <iostream>
+#include "EX.h"
 
 using namespace std;
 
