@@ -6,6 +6,9 @@
 
 using namespace std;
 
+extern vector<MEMSlot> Regs;
+extern string tmpWReg;
+
 ID::ID(void)
 {
 	instruction = "";
