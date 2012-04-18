@@ -93,7 +93,7 @@ int Converter::convertToMachine(void)
 	nextPos = asmCode[i].find_first_of(" ",currPos);
         opcode = asmCode[i].substr(currPos,nextPos-currPos);
 	currPos = nextPos;
-	nextPos = (asmCode.size()-1);//asmCode[i].find_first_of(" ",currPos);
+	nextPos = asmCode[i].find_first_of(" ",currPos);
         operands = asmCode[i].substr(currPos,nextPos-currPos);
         binary = "";
         cout << "found opcode " << opcode << " with operands " << operands << endl;
@@ -218,9 +218,16 @@ int Converter::convertToMachine(void)
         {
             case 'R':
                 string rd,rs,rt;
-                rd = strtok(operands,',');
-                rs = strtok(operands,',');
-                rt = strtok(operands,',');
+                int currPos, nextPos;
+                currPos = 0;
+                nextPos = operands.find_first_of(',',currPos);
+                rd = operands.substr(currPos,nextPos-currPos);
+                currPos = nextPos;
+                nextPos = operands.find_first_of(',',currPos);
+                rs = operands.substr(currPos,nextPos-currPos);
+                currPos = nextPos;
+                nextPos = operands.find_first_of(',',currPos);
+                rt = operands.substr(currPos,nextPos-currPos);
                 
                 //make sure they're registers
                 if (rd[0] != '$') || (rd[1] != 'r') || (rs[0] != '$') || (rs[1] != 'r') || (rt[0] != '$') || (rt[1] != 'r')
