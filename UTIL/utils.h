@@ -6,6 +6,6 @@
 using namespace std;
 
 string itob(int, int);
-int btoi(string);
+int btoi(string&);
 
 #endif

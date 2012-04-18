@@ -49,7 +49,7 @@ string itob(int n, int l)
     return result;
 }
 
-int btoi (string str)
+int btoi (string& str)
 {
     bool neg;
     int retval;
