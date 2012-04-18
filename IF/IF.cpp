@@ -23,13 +23,13 @@ IF::IF (void)
 	
 int IF::fetchInstruction(void)
 {
-	if(btoi(PC.c_str()) > MAXMEM)
+	if(btoi(PC) > MAXMEM)
 		return -1;
 		
-	if(btoi(PC.c_str()) < 0)
+	if(btoi(PC) < 0)
 		return -1;
 	
-	int location = btoi(PC.c_str());
+	int location = btoi(PC);
 	int vecloc = location/2;
 	
 	instruction = IMEM[vecloc].data;
@@ -39,7 +39,7 @@ int IF::fetchInstruction(void)
 
 int IF::incrementPC(void)
 {
-	int PCVal = btoi(PC.c_str());
+	int PCVal = btoi(PC);
 	
 	if(PCVal > 0xFFFB)
 		return -1;
