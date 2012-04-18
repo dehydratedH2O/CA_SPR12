@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <iostream>
+#include "utils.h"
 
 using namespace std;
 
@@ -48,7 +49,7 @@ string itob(int n, int l)
     return result;
 }
 
-int btoi (char* str)
+int btoi (string str)
 {
     bool neg;
     int retval;
@@ -58,7 +59,7 @@ int btoi (char* str)
     else
         neg = true;
 
-    retval = strtol(str,NULL,2);
+    retval = strtol(str.c_str(),NULL,2);
     if(neg == true)
     {
         //undo 2's complement
