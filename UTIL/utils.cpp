@@ -1,4 +1,7 @@
 #include <string>
+#include <algorithm>
+#include <cstdlib>
+#include <iostream>
 
 using namespace std;
 
@@ -30,9 +33,9 @@ string itob(int n, int l)
         for (int i = 0; i < (l - result.length()); i++)
         {
             if (neg)
-                result.insert(0,'1');
+                result.insert(0,"1");
             else
-                result.insert(0,'0');
+                result.insert(0,"0");
         }
     }
 
@@ -50,13 +53,13 @@ int btoi (char* str)
     bool neg;
     int retval;
 
-    if str[0] == '0'
+    if(str[0] == '0')
         neg = false;
     else
         neg = true;
 
     retval = strtol(str,NULL,2);
-    if neg
+    if(neg == true)
     {
         //undo 2's complement
         retval--;
