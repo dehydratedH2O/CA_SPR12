@@ -226,5 +226,3 @@ void IF::perform(void)
 	}
 }
 
-int main(void)
-{ cout << "test" << endl; }

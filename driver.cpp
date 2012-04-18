@@ -18,8 +18,12 @@ int currentPC;
 void transfer(IF*,ID*,EX*,MEM*,WB*);
 
 vector<MEMSlot> Regs;
+vector<MEMSlot> IMEM;
+vector<MEMSlot> DMEM;
 
 string tmpWReg;
+
+int MAXMEM, BANDWIDTH;
 
 int main()
 {
@@ -27,12 +31,10 @@ int main()
 	//AS WELL AS STORE MACHINE INSTRUCTIONS
 	//IN IMEM
 	
-	int MAXMEM = 4096; //highest imem memory location in program
-	vector<MEMSlot> IMEM;
-	vector<MEMSlot> DMEM;
 	currentPC = 0;
 	tmpWReg = "";
-	
+	MAXMEM = 4096;
+	BANDWIDTH = 16;
 	//INITIALIZE DMEM
 	for(int i = 4096; i < 65536; i = i + 2)
 	{
