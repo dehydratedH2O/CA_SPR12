@@ -1,6 +1,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <iostream>
 
 #include "ASM/Converter.h"
 #include "UTIL/MEMSlot.h"
@@ -25,6 +26,8 @@ string tmpWReg;
 
 int MAXMEM, BANDWIDTH;
 
+int cycle;
+
 int main()
 {
 	//CODE HERE TO CONVERT ASM TO BINARY
@@ -35,6 +38,8 @@ int main()
 	tmpWReg = "";
 	MAXMEM = 4096;
 	BANDWIDTH = 16;
+	cycle = 0;
+
 	//INITIALIZE DMEM
 	for(int i = 4096; i < 65536; i = i + 2)
 	{
@@ -227,6 +232,7 @@ int main()
 	MEM* dMEM = new MEM();
 	WB* dWB = new WB();
 	
+	string a = "";
 	while(currentPC < MAXMEM)
 	{
 		//THREADING CODE NEEDED HERE
@@ -237,6 +243,10 @@ int main()
 		dWB->perform();
 		
 		transfer(dIF, dID, dEX, dMEM, dWB);
+
+		cout << "Press ENTER to run next cycle.";
+		cin >> a;
+		cout << endl << endl << endl << endl;
 	}
 
 	return 0;
@@ -251,15 +261,34 @@ string intToString(int a)
 
 void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 {
+	//Cycle Initialization
+	cout << "--------------------------------------" << endl;
+	cout << "             Cycle " << cycle << endl;
+	cout << "--------------------------------------" << endl << endl;
+
 	//Set WB Inputs
 	dWB->setMemOut(dMEM->getMemOut());
 	dWB->setALUResult(dMEM->getALUResult());
 	dWB->setControl(dMEM->getControl());
+
+	//Output MEM/WB Buffer
+	cout << "MEM/WB Buffer" << endl;
+	cout << "-------------" << endl;
+	cout << "Memory Output: " << dMEM->getMemOut() << endl;
+	cout << "ALU Result: " << dMEM->getALUResult() << endl;
+	cout << "Control Signals: " << dMEM->getControl() << endl << endl;
 	
 	//Set MEM Inputs
 	dMEM->setALUResult(dEX->getALUResult());
 	dMEM->setRTVal(dEX->getRTVal());
 	dMEM->setControl(dMEM->getControl());
+
+	//Output EX/MEM Buffer
+	cout << "EX/MEM Buffer" << endl;
+	cout << "-------------" << endl;
+	cout << "ALUResult: " << dEX->getALUResult() << endl;
+	cout << "Rt Value: " << dEX->getRTVal() << endl;
+	cout << "Control Signals: " << dEX->getControl() << endl << endl;
 	
 	//Set EX Inputs
 	dEX->setRSVal(dID->getRSVal());
@@ -267,15 +296,35 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	dEX->setSignExtendedImmediate(dID->getSignExtendedImmediate());
 	dEX->setPCin(dID->getPCout());
 	dEX->setControl(dID->getControl());
+
+	//Output ID/EX Buffer
+	cout << "ID/EX Buffer" << endl;
+	cout << "------------" << endl;
+	cout << "Rs Value: " << dID->getRSVal() << endl;
+	cout << "Rt Value: " << dID->getRTVal() << endl;
+	cout << "Sign Extended Immediate: " << dID->getSignExtendedImmediate() << endl;
+	cout << "PC: " << dID->getPCout() << endl;
+	cout << "Control Signals: " << dID->getControl() << endl << endl;
 	
 	//Set ID Inputs
 	dID->setInstruction(dIF->getInstruction());
 	dID->setPCin(dIF->getIncPC());
 	dID->setControl(dIF->getControl());
 	
+	//Output IF/ID Buffer
+	cout << "IF/ID Buffer" << endl;
+	cout << "------------" << endl;
+	cout << "Instruction: " << dIF->getInstruction() << endl;
+	cout << "PC: " << dIF->getIncPC() << endl;
+	cout << "Control Signals: " << dIF->getControl() << endl << endl;
+
 	//Set IF Inputs
 	dIF->setPC(itob(currentPC,16));
-	
+
+	//Output Finalization
+	cout << "PC incoming to IF phase: " << itob(currentPC,16) << endl << endl;
+	cout << endl << endl;	
+
 	//Shift Regs MEM
 	Regs[11].data = Regs[10].data;
 	Regs[10].data = Regs[9].data;
