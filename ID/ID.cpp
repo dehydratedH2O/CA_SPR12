@@ -1,6 +1,13 @@
+#include <iostream>
 #include <string>
+#include <vector>
+#include "ID.h"
+#include "../UTIL/MEMSlot.h"
 
 using namespace std;
+
+extern vector<MEMSlot> Regs;
+extern string tmpWReg;
 
 ID::ID(void)
 {

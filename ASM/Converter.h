@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <algorithm>
 #include "../UTIL/MEMSlot.h"
 
 using namespace std;
@@ -20,7 +21,6 @@ class Converter
 	public:
 		//Constructor
 		Converter() {};
-	
 		int parseInput(string);
 		int convertToMachine(void);
 		int createIMEM(void);
