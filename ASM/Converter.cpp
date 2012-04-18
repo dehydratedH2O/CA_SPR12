@@ -2,11 +2,15 @@
 #include <fstream>
 #include <cstring>
 #include <sstream>
+#include <vector>
+#include "../UTIL/MEMSlot.h"
 #include "Converter.h"
 
 using namespace std;
 
 #define FILEPATH "../testASM"
+
+extern vector<MEMSlot> IMEM;
 
 string Converter::itob(int n, int l)
 {
@@ -98,119 +102,141 @@ int Converter::convertToMachine(void)
         operands = asmCode[i].substr(currPos,nextPos-currPos);
         binary = "";
         cout << "found opcode " << opcode << " with operands " << operands << endl;
-        switch (opcode)
-        {
-            case "add":
-                binary.append("0000"); //append opcode to binary
+
+            if(opcode == "add")
+                {
+		binary.append("0000"); //append opcode to binary
                 type = 'R';
                 func = "000";
-                break;
-            case "sub":
-                binary.append("0000"); //append opcode to binary
+		}
+            else if (opcode == "sub")
+                {
+		binary.append("0000"); //append opcode to binary
                 type = 'R';
                 func = "001";
-                break;
-            case "slt":
-                binary.append("0000"); //append opcode to binary
+		}
+            else if (opcode == "slt")
+                {
+		binary.append("0000"); //append opcode to binary
                 type = 'R';
                 func = "010";
-                break;
-            case "sgt":
-                binary.append("0000"); //append opcode to binary
+		}
+            else if (opcode == "sgt")
+                {
+		binary.append("0000"); //append opcode to binary
                 type = 'R';
                 func = "011";
-                break;
-            case "sle":
-                binary.append("0000"); //append opcode to binary
+		}
+            else if (opcode == "sle")
+                {
+		binary.append("0000"); //append opcode to binary
                 type = 'R';
                 func = "100";
-                break;
-            case "sge":
-                binary.append("0000"); //append opcode to binary
+		}
+            else if (opcode == "sge")
+                {
+		binary.append("0000"); //append opcode to binary
                 type = 'R';
                 func = "101";
-                break;
-            case "and":
-                binary.append("0001"); //append opcode to binary
+		}
+            else if (opcode == "and")
+                {
+		binary.append("0001"); //append opcode to binary
                 type = 'R';
                 func = "000";
-                break;
-            case "or":
-                binary.append("0001"); //append opcode to binary
+		}
+            else if (opcode == "or")
+                {
+		binary.append("0001"); //append opcode to binary
                 type = 'R';
                 func = "001";
-                break;
-            case "nor":
-                binary.append("0001"); //append opcode to binary
+		}
+            else if (opcode == "nor")
+                {
+		binary.append("0001"); //append opcode to binary
                 type = 'R';
                 func = "010";
-                break;
-            case "xor":
-                binary.append("0001"); //append opcode to binary
+		}
+            else if (opcode == "xor")
+                {
+		binary.append("0001"); //append opcode to binary
                 type = 'R';
                 func = "011";
-                break;
-            case "sll":
-                binary.append("0010"); //append opcode to binary
+		}
+            else if (opcode == "sll")
+                {
+		binary.append("0010"); //append opcode to binary
                 type = 'I';
                 func = "";
-                break;
-            case "srl":
-                binary.append("0011"); //append opcode to binary
+		}
+            else if (opcode == "srl")
+                {
+		binary.append("0011"); //append opcode to binary
                 type = 'I';
                 func = "";
-                break;
-            case "beq":
-                binary.append("0100"); //append opcode to binary
+		}
+            else if (opcode == "beq")
+                {
+		binary.append("0100"); //append opcode to binary
                 type = 'I';
                 func = "";
-                break;
-            case "blt":
-                binary.append("0101"); //append opcode to binary
+		}
+            else if (opcode == "blt")
+                {
+		binary.append("0101"); //append opcode to binary
                 type = 'I';
                 func = "";
-                break;
-            case "bgt":
-                binary.append("0110"); //append opcode to binary
+		}
+            else if (opcode == "bgt")
+                {
+		binary.append("0110"); //append opcode to binary
                 type = 'I';
                 func = "";
-                break;
-            case "ble":
-                binary.append("0111"); //append opcode to binary
+		}
+            else if (opcode == "ble")
+                {
+		binary.append("0111"); //append opcode to binary
                 type = 'I';
                 func = "";
-                break;
-            case "bge":
-                binary.append("1000"); //append opcode to binary
+		}
+            else if (opcode == "bge")
+		{                
+		binary.append("1000"); //append opcode to binary
                 type = 'I';
                 func = "";
-                break;
-            case "ori":
-                binary.append("1001"); //append opcode to binary
+		}
+            else if (opcode == "ori")
+                {
+		binary.append("1001"); //append opcode to binary
                 type = 'I';
                 func = "";
-                break;
-            case "andi":
-                binary.append("1010"); //append opcode to binary
+		}
+            else if (opcode == "andi")
+		{                
+		binary.append("1010"); //append opcode to binary
                 type = 'I';
                 func = "";
-                break;
-            case "lw":
-                binary.append("1011"); //append opcode to binary
+		}
+            else if (opcode == "lw")
+                {
+		binary.append("1011"); //append opcode to binary
                 type = 'I';
                 func = "";
-                break;
-            case "sw":
-                binary.append("1100"); //append opcode to binary
+		}
+            else if (opcode == "sw")
+            {
+		binary.append("1100"); //append opcode to binary
                 type = 'I';
                 func = "";
-                break;
-            case "j":
-                binary.append("1101"); //append opcode to binary
+	    }
+            else if (opcode == "j")
+            {
+		binary.append("1101"); //append opcode to binary
                 type = 'J';
                 func = "";
-                break;
-            default:
+	    }
+            else
+		{
                 cout << "bad opcode " << opcode << endl;
                 return 1;
         } // end switch
