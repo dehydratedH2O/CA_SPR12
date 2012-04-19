@@ -255,7 +255,8 @@ int main()
 		transfer(dIF, dID, dEX, dMEM, dWB);
 
 		cout << "Type and press ENTER to continue.";
-		cin >> a;
+		//cin >> a;
+		cin.ignore();
 		cout << endl << endl << endl << endl;
 	}
 
