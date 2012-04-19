@@ -100,7 +100,14 @@ int Converter::convertToMachine(void)
         binary = "";
         cout << "found opcode " << opcode << " with operands " << operands << endl;
 
-            if(opcode == "add")
+        if (opcode == "nop")
+        {
+            binary.append("0001"); //just and it with itself
+            type = 'R';
+            func = "000";
+            operands = "$r0,$r0,$r0";
+        }
+        else if(opcode == "add")
                 {
 		binary.append("0000"); //append opcode to binary
                 type = 'R';
