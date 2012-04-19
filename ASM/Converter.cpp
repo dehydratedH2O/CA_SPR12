@@ -95,7 +95,7 @@ int Converter::convertToMachine(void)
 	nextPos = asmCode[i].find_first_of(" ",currPos);
         opcode = asmCode[i].substr(currPos,nextPos-currPos);
 	currPos = nextPos;
-	nextPos = asmCode[i].length()-1;//asmCode[i].find_first_of(" ",currPos);
+	nextPos = asmCode[i].length();//asmCode[i].find_first_of(" ",currPos);
         operands = asmCode[i].substr(currPos,nextPos-currPos);
         binary = "";
         cout << "found opcode " << opcode << " with operands " << operands << endl;
@@ -263,7 +263,7 @@ int Converter::convertToMachine(void)
                 nextPos = operands.find_first_of(',',currPos);
                 rs = operands.substr(currPos,nextPos-currPos);
                 currPos = nextPos;
-                nextPos = operands.length()-1;//operands.find_first_of(',',currPos);
+                nextPos = operands.length();//operands.find_first_of(',',currPos);
                 rt = operands.substr(currPos,nextPos-currPos);
                 
                 //make sure they're registers
