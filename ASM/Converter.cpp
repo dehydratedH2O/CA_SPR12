@@ -8,7 +8,7 @@
 
 using namespace std;
 
-#define FILEPATH "../testASM"
+#define FILEPATH "../testASM.txt"
 
 extern vector<MEMSlot> IMEM;
 
