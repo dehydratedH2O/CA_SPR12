@@ -206,7 +206,7 @@ int IF::determineControlSignals(void)
 		controlSignals = "0110100100000";
 	if(opcode == "1101")
 		controlSignals = "0000000000100";
-		
+
 	control = controlSignals;
 	return 0;
 }
@@ -218,6 +218,13 @@ void IF::perform(void)
 	{
 		cout << "ERROR IN INSTRUCTION FETCH." << endl;
 		cout << "ERROR IN GETTING INSTRUCTION." << endl;
+	}
+
+	rc = determineControlSignals();
+	if(rc == -1)
+	{
+		cout << "ERROR IN INSTRUCTION FETCH." << endl;
+		cout << "ERROR IN DETERMINING CONTROL SIGNALS." << endl;
 	}
 	
 	rc = incrementPC();
