@@ -256,13 +256,13 @@ int Converter::convertToMachine(void)
             case 'R':
                 //string rd,rs,rt;
                 //int currPos, nextPos;
-                currPos = 0;
+                currPos = 1;
                 nextPos = operands.find_first_of(',',currPos);
                 rd = operands.substr(currPos,nextPos-currPos);
-                currPos = nextPos;
+                currPos = ++nextPos;
                 nextPos = operands.find_first_of(',',currPos);
                 rs = operands.substr(currPos,nextPos-currPos);
-                currPos = nextPos;
+                currPos = ++nextPos;
                 nextPos = operands.length();//operands.find_first_of(',',currPos);
                 rt = operands.substr(currPos,nextPos-currPos);
                 
@@ -310,15 +310,17 @@ int Converter::convertToMachine(void)
             case 'I':
                 //string rs, rt, imm;
                 //int currPos, nextPos;
-                currPos = 0;
+                currPos = 1;
                 nextPos = operands.find_first_of(',',currPos);
                 rs = operands.substr(currPos,nextPos-currPos);
-                currPos = nextPos;
+                currPos = ++nextPos;
                 nextPos = operands.find_first_of(',',currPos);
                 rt = operands.substr(currPos,nextPos-currPos);
-                currPos = nextPos;
-                nextPos = operands.length() - 1; //operands.find_first_of(',',currPos);
+                currPos = ++nextPos;
+                nextPos = operands.length(); //operands.find_first_of(',',currPos);
                 imm = operands.substr(currPos,nextPos-currPos);
+
+                cout << "rs " << rs << "; rt " << rt << "; imm " << imm << endl;
 
                 //make sure they're registers
                 if((rs[0] != '$') || (rs[1] != 'r') || (rt[0] != '$') || (rt[1] != 'r'))
