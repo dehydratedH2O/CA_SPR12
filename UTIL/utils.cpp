@@ -33,7 +33,8 @@ string itob(int n, int l)
     //pad
     if (result.length() < l)
     {
-        for (int i = 0; i < (l - result.length()); i++)
+        int origLen = result.length();
+        for (int i = 0; i < (l - origLen); i++)
         {
             /*
             if (neg)
