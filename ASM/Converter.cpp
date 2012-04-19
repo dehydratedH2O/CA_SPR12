@@ -59,15 +59,12 @@ int Converter::parseInput(string filepath)
 {
     string temp;
     ifstream fin;
-
-    if (filepath == "")
-        filepath = FILEPATH;
 	
     //exception handling for input
     fin.exceptions(ifstream::failbit|ifstream::badbit);
     try
     {
-	    fin.open(filepath.c_str());
+	    fin.open("testASM.txt");
 
     	//PARSE ASM FROM TXT HERE
         while(getline(fin,temp))
