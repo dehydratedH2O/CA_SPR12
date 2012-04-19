@@ -254,7 +254,7 @@ int main()
 	
 		transfer(dIF, dID, dEX, dMEM, dWB);
 
-		cout << "Press ENTER to run next cycle.";
+		cout << "Type and press ENTER to continue.";
 		cin >> a;
 		cout << endl << endl << endl << endl;
 	}
@@ -275,6 +275,7 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	cout << "--------------------------------------" << endl;
 	cout << "             Cycle " << cycle << endl;
 	cout << "--------------------------------------" << endl << endl;
+	cycle++;
 
 	//Set WB Inputs
 	dWB->setMemOut(dMEM->getMemOut());
@@ -291,7 +292,7 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	//Set MEM Inputs
 	dMEM->setALUResult(dEX->getALUResult());
 	dMEM->setRTVal(dEX->getRTVal());
-	dMEM->setControl(dMEM->getControl());
+	dMEM->setControl(dEX->getControl());
 
 	//Output EX/MEM Buffer
 	cout << "EX/MEM Buffer" << endl;
@@ -330,13 +331,14 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 
 	//Set IF Inputs
 	dIF->setPC(itob(currentPC,16));
+	if(cycle != 1)
+		dIF->setPC(dIF->getIncPC());
 
 	//Output Finalization
-	cout << "PC incoming to IF phase: " << itob(currentPC,16) << endl << endl;
+	cout << "PC incoming to IF phase: " << dIF->getIncPC() << endl << endl;
 	cout << endl << endl;	
 
 	//Shift Regs MEM
-	Regs[11].data = Regs[10].data;
 	Regs[10].data = Regs[9].data;
 	Regs[9].data = Regs[8].data;
 	Regs[8].data = tmpWReg;
