@@ -19,6 +19,7 @@ string Converter::itob(int n, int l)
     
     cout << "converted " << n;
 
+    /*
     if (n < 0)
         neg = true;
     else
@@ -30,6 +31,7 @@ string Converter::itob(int n, int l)
         n = ~n;
         n++;
     }
+    */
 
     do result.push_back( '0' + (n & 1) );
     while (n >>= 1);
@@ -42,9 +44,9 @@ string Converter::itob(int n, int l)
         int origLen = result.length();
         for (int i = 0; i < (l - origLen); i++)
         {
-            if (neg)
+            /*if (neg)
                 result.insert(0,"1");
-            else
+            else*/
                 result.insert(0,"0");
         }
     }

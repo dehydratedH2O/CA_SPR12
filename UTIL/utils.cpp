@@ -11,6 +11,7 @@ string itob(int n, int l)
     bool neg;
     string result;
 
+    /*
     if (n < 0)
         neg = true;
     else
@@ -22,6 +23,7 @@ string itob(int n, int l)
         n = ~n;
         n++;
     }
+    */
 
     do result.push_back( '0' + (n & 1) );
     while (n >>= 1);
@@ -33,9 +35,10 @@ string itob(int n, int l)
     {
         for (int i = 0; i < (l - result.length()); i++)
         {
+            /*
             if (neg)
                 result.insert(0,"1");
-            else
+            else*/
                 result.insert(0,"0");
         }
     }
@@ -54,18 +57,20 @@ int btoi (string& str)
     bool neg;
     int retval;
 
+    /*
     if(str[0] == '0')
         neg = false;
     else
         neg = true;
-
+    */
     retval = strtol(str.c_str(),NULL,2);
+    /*
     if(neg == true)
     {
         //undo 2's complement
         retval--;
         retval = ~retval;
-    }
+    }*/
 
     return retval;
 }
