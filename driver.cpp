@@ -38,7 +38,7 @@ int main()
 	tmpWReg = "";
 	MAXMEM = 4096;
 	BANDWIDTH = 16;
-	cycle = 0;
+	cycle = 1;
 
 	//INITIALIZE DMEM
 	for(int i = 4096; i < 65536; i = i + 2)
@@ -231,17 +231,27 @@ int main()
 	EX* dEX = new EX();
 	MEM* dMEM = new MEM();
 	WB* dWB = new WB();
+
+	//TEST IMEM
+	for(int i = 0; i < 44; i++)
+	{
+		cout << IMEM[i].data << endl;
+	}
 	
 	string a = "";
 	while(currentPC < MAXMEM)
 	{
 		//THREADING CODE NEEDED HERE
 		dIF->perform();
-		dID->perform();
-		dEX->perform();
-		dMEM->perform();
-		dWB->perform();
-		
+		if(cycle > 1)
+			dID->perform();
+		if(cycle > 2)
+			dEX->perform();
+		if(cycle > 3)
+			dMEM->perform();
+		if(cycle > 4)
+			dWB->perform();
+	
 		transfer(dIF, dID, dEX, dMEM, dWB);
 
 		cout << "Press ENTER to run next cycle.";

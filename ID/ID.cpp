@@ -24,7 +24,7 @@ ID::ID(void)
 
 int ID::doJump(void)
 {
-	if(control.at(11) == '0')
+	if(control[11] == '0')
 		return 0;
 	
 	//First, extract address from instruction
