@@ -374,6 +374,7 @@ int Converter::convertToMachine(void)
         //binary is ready; push it back
         machineCode.push_back(binary);
     } // end for
+    cout << "finished ASM to binary" << endl;
 	return 0;
 }
 
