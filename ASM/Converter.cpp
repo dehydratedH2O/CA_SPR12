@@ -16,6 +16,8 @@ string Converter::itob(int n, int l)
 {
     bool neg;
     string result;
+    
+    cout << "converted " << n;
 
     if (n < 0)
         neg = true;
@@ -37,7 +39,8 @@ string Converter::itob(int n, int l)
     //pad
     if (result.length() < l)
     {
-        for (int i = 0; i < (l - result.length()); i++)
+        int origLen = result.length();
+        for (int i = 0; i < (l - origLen); i++)
         {
             if (neg)
                 result.insert(0,"1");
@@ -52,6 +55,7 @@ string Converter::itob(int n, int l)
         cout << "ERROR: binary representation of " << n << " bigger than " << l << " bits!" << endl;
     }
 
+    cout << " to " << result << endl;
     return result;
 }
 
@@ -370,7 +374,7 @@ int Converter::convertToMachine(void)
             default:
                 return 1; //should never get here
         } // end type switch
-
+        cout << "binary: " << binary << endl;
         //binary is ready; push it back
         machineCode.push_back(binary);
     } // end for
