@@ -19,13 +19,13 @@ int WB::setRegVals(void)
 {
 	string wVal = "";
 	
-	if(control[10] /*MemToReg*/ == 1)
+	if(control[10] /*MemToReg*/ == '1')
 	{
 		wVal = MemOut;
 	}
 	else wVal = ALUResult;
 	
-	string writeToReg = Regs[11].data;
+	string writeToReg = Regs[10].data;
 	for(int i = 0; i < 8; i++)
 	{
 		if(Regs[i].location == writeToReg)

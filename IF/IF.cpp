@@ -33,8 +33,6 @@ int IF::fetchInstruction(void)
 	int vecloc = location/2;
 	
 	instruction = IMEM[vecloc].data;
-
-	cout << IMEM[vecloc].data << endl;
 	
 	return 0;
 }
