@@ -10,6 +10,7 @@ extern vector<MEMSlot> Regs;
 
 WB::WB(void)
 {
+	NOP = 0;
 	MemOut = "";
 	ALUResult = "";
 	control = "";
@@ -41,10 +42,13 @@ int WB::setRegVals(void)
 
 void WB::perform(void)
 {
-	int rc = setRegVals();
-	if(rc == -1)
+	if(NOP == 0)
 	{
-		cout << "ERROR IN WRITE BACK." << endl;
-		cout << "ERROR IN SETTING REGISTER VALUES." << endl;
+		int rc = setRegVals();
+		if(rc == -1)
+		{
+			cout << "ERROR IN WRITE BACK." << endl;
+			cout << "ERROR IN SETTING REGISTER VALUES." << endl;
+		}
 	}
 }

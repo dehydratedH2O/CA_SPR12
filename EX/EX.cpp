@@ -11,7 +11,7 @@ EX::EX(void)
 	RTVal = "";
 	signExtendedImmediate = "";
 	PCin = "";
-	
+	NOP = 0;
 	ALUResult = "";
 	PCout = "";
 	
@@ -20,19 +20,22 @@ EX::EX(void)
 
 void EX::perform(void)
 {
-    int rc;
-	rc = ALUCompute();
-	if(rc == -1)
+    	if(NOP == 0)
 	{
-		cout << "ERROR IN EXECUTE." << endl;
-		cout << "ERROR IN ALU COMPUTATION." << endl;
-	}
+		int rc;
+		rc = ALUCompute();
+		if(rc == -1)
+		{
+			cout << "ERROR IN EXECUTE." << endl;
+			cout << "ERROR IN ALU COMPUTATION." << endl;
+		}
 
-	rc = doBranch();
-	if(rc == -1)
-	{
-		cout << "ERROR IN EXECUTE." << endl;
-		cout << "ERROR IN BRANCH DECISION/EXECUTION." << endl;
+		rc = doBranch();
+		if(rc == -1)
+		{
+			cout << "ERROR IN EXECUTE." << endl;
+			cout << "ERROR IN BRANCH DECISION/EXECUTION." << endl;
+		}
 	}
 }
 

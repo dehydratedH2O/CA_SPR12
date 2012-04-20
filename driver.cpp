@@ -28,6 +28,8 @@ int MAXMEM, BANDWIDTH;
 
 int cycle;
 
+int NOPctr;
+
 int main()
 {
 	//CODE HERE TO CONVERT ASM TO BINARY
@@ -39,6 +41,7 @@ int main()
 	MAXMEM = 4096;
 	BANDWIDTH = 16;
 	cycle = 1;
+	NOPctr = 0;
 
 	//INITIALIZE DMEM
 	for(int i = 4096; i < 65536; i = i + 2)
@@ -277,30 +280,44 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	cout << "             Cycle " << cycle << endl;
 	cout << "--------------------------------------" << endl << endl;
 	cycle++;
+	cout << "NOPctr: " << NOPctr << endl << endl;
+
+	//NOP Handling
+	if(NOPctr > 0) 
+	{
+		dIF->setNOP(1);
+		NOPctr--;
+	}
+	else dIF->setNOP(0);
+	
 
 	//Set WB Inputs
 	dWB->setMemOut(dMEM->getMemOut());
 	dWB->setALUResult(dMEM->getALUResult());
 	dWB->setControl(dMEM->getControl());
+	dWB->setNOP(dMEM->getNOP());
 
 	//Output MEM/WB Buffer
 	cout << "MEM/WB Buffer" << endl;
 	cout << "-------------" << endl;
 	cout << "Memory Output: " << dMEM->getMemOut() << endl;
 	cout << "ALU Result: " << dMEM->getALUResult() << endl;
-	cout << "Control Signals: " << dMEM->getControl() << endl << endl;
+	cout << "Control Signals: " << dMEM->getControl() << endl;
+	cout << "MEM/WB NOP value: " << dMEM->getNOP() << endl << endl;
 	
 	//Set MEM Inputs
 	dMEM->setALUResult(dEX->getALUResult());
 	dMEM->setRTVal(dEX->getRTVal());
 	dMEM->setControl(dEX->getControl());
+	dMEM->setNOP(dEX->getNOP());
 
 	//Output EX/MEM Buffer
 	cout << "EX/MEM Buffer" << endl;
 	cout << "-------------" << endl;
 	cout << "ALUResult: " << dEX->getALUResult() << endl;
 	cout << "Rt Value: " << dEX->getRTVal() << endl;
-	cout << "Control Signals: " << dEX->getControl() << endl << endl;
+	cout << "Control Signals: " << dEX->getControl() << endl;
+	cout << "EX/MEM NOP value: " << dEX->getNOP() << endl << endl;
 	
 	//Set EX Inputs
 	dEX->setRSVal(dID->getRSVal());
@@ -308,6 +325,7 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	dEX->setSignExtendedImmediate(dID->getSignExtendedImmediate());
 	dEX->setPCin(dID->getPCout());
 	dEX->setControl(dID->getControl());
+	dEX->setNOP(dID->getNOP());
 
 	//Output ID/EX Buffer
 	cout << "ID/EX Buffer" << endl;
@@ -316,19 +334,22 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	cout << "Rt Value: " << dID->getRTVal() << endl;
 	cout << "Sign Extended Immediate: " << dID->getSignExtendedImmediate() << endl;
 	cout << "PC: " << dID->getPCout() << endl;
-	cout << "Control Signals: " << dID->getControl() << endl << endl;
+	cout << "Control Signals: " << dID->getControl() << endl;
+	cout << "ID/EX NOP value: " << dID->getNOP() << endl << endl;
 	
 	//Set ID Inputs
 	dID->setInstruction(dIF->getInstruction());
 	dID->setPCin(dIF->getIncPC());
 	dID->setControl(dIF->getControl());
+	dID->setNOP(dIF->getNOP());
 	
 	//Output IF/ID Buffer
 	cout << "IF/ID Buffer" << endl;
 	cout << "------------" << endl;
 	cout << "Instruction: " << dIF->getInstruction() << endl;
 	cout << "PC: " << dIF->getIncPC() << endl;
-	cout << "Control Signals: " << dIF->getControl() << endl << endl;
+	cout << "Control Signals: " << dIF->getControl() << endl;
+	cout << "IF/ID NOP value: " << dIF->getNOP() << endl << endl;
 
 	//Set IF Inputs
 	dIF->setPC(itob(currentPC,16));

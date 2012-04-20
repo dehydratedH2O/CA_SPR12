@@ -13,7 +13,7 @@ ID::ID(void)
 {
 	instruction = "";
 	PCin = "";
-	
+	NOP = 0;
 	PCout = "";
 	RSVal = "";
 	RTVal = "";
@@ -162,24 +162,27 @@ int ID::signExtendImmediate(void)
 
 void ID::perform(void)
 {
-	int rc = doJump();
-	if(rc == -1)
+	if(NOP == 0)
 	{
-		cout << "ERROR IN INSTRUCTION DECODE." << endl;
-		cout << "ERROR IN JUMP DECISION/EXECUTION." << endl;
-	}
+		int rc = doJump();
+		if(rc == -1)
+		{
+			cout << "ERROR IN INSTRUCTION DECODE." << endl;
+			cout << "ERROR IN JUMP DECISION/EXECUTION." << endl;
+		}
 	
-	rc = getRegistersFromFile();
-	if(rc == -1)
-	{
-		cout << "ERROR IN INSTRUCTION DECODE." << endl;
-		cout << "ERROR IN OBTAINING REGISTERS." << endl;
-	}
+		rc = getRegistersFromFile();
+		if(rc == -1)
+		{
+			cout << "ERROR IN INSTRUCTION DECODE." << endl;
+			cout << "ERROR IN OBTAINING REGISTERS." << endl;
+		}
 	
-	rc = signExtendImmediate();
-	if(rc == -1)
-	{
-		cout << "ERROR IN INSTRUCTION DECODE." << endl;
-		cout << "ERROR IN SIGN EXTENSION." << endl;
+		rc = signExtendImmediate();
+		if(rc == -1)
+		{
+			cout << "ERROR IN INSTRUCTION DECODE." << endl;
+			cout << "ERROR IN SIGN EXTENSION." << endl;
+		}
 	}
 }

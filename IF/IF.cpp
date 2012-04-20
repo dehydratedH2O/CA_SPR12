@@ -10,12 +10,13 @@ using namespace std;
 extern int MAXMEM;
 extern vector<MEMSlot> IMEM;
 extern int BANDWIDTH;
+extern int NOPctr;
 
 //CONSTRUCTOR
 IF::IF (void)
 {
 	PC = "0000000000000000";
-	
+	NOP = 0;
 	incPC = "";
 	instruction = "";
 	control = "";
@@ -209,27 +210,52 @@ int IF::determineControlSignals(void)
 	return 0;
 }
 
+void IF::calcNOPs(void)
+{
+	string instr = "";
+	for(int i = 0; i < BANDWIDTH; i++)
+	{
+		instr += instruction[i];
+	}
+	string opcode = instr.substr(0, 4);
+
+	if(opcode == "1011" /* LW */)
+		NOPctr = 1;
+	
+	if((opcode == "0100") || (opcode == "0101") || (opcode == "0110") || (opcode == "0111") || (opcode == "1000") /*branches*/)
+		NOPctr = 2;
+
+	if(opcode == "1101")
+		NOPctr = 1;
+
+	return;	
+}
+
 void IF::perform(void)
 {
-	int rc = fetchInstruction();
-	if(rc == -1)
-	{
-		cout << "ERROR IN INSTRUCTION FETCH." << endl;
-		cout << "ERROR IN GETTING INSTRUCTION." << endl;
-	}
+	calcNOPs();	
+	if(NOP == 0)
+	{	
+		int rc = fetchInstruction();
+		if(rc == -1)
+		{
+			cout << "ERROR IN INSTRUCTION FETCH." << endl;
+			cout << "ERROR IN GETTING INSTRUCTION." << endl;
+		}
 
-	rc = determineControlSignals();
-	if(rc == -1)
-	{
-		cout << "ERROR IN INSTRUCTION FETCH." << endl;
-		cout << "ERROR IN DETERMINING CONTROL SIGNALS." << endl;
-	}
+		rc = determineControlSignals();
+		if(rc == -1)
+		{
+			cout << "ERROR IN INSTRUCTION FETCH." << endl;
+			cout << "ERROR IN DETERMINING CONTROL SIGNALS." << endl;
+		}
 	
-	rc = incrementPC();
-	if(rc == -1)
-	{
-		cout << "ERROR IN INSTRUCTION FETCH." << endl;
-		cout << "ERROR IN INCREMENTING PC." << endl;
+		rc = incrementPC();
+		if(rc == -1)
+		{
+			cout << "ERROR IN INSTRUCTION FETCH." << endl;
+			cout << "ERROR IN INCREMENTING PC." << endl;
+		}
 	}
 }
 

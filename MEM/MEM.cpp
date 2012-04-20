@@ -10,6 +10,7 @@ extern vector<MEMSlot> DMEM;
 
 MEM::MEM(void)
 {
+	NOP = 0;	
 	RTVal = "";
 	
 	MemOut = "";
@@ -58,17 +59,20 @@ int MEM::loadFromMem(void)
 
 void MEM::perform(void)
 {
-	int rc = storeToMem();
-	if(rc != 0)
+	if(NOP == 0)
 	{
-		cout << "ERROR IN MEMORY." << endl;
-		cout << "ERROR IN MEMORY STORAGE. RC: " << rc << endl;
-	}
+		int rc = storeToMem();
+		if(rc != 0)
+		{
+			cout << "ERROR IN MEMORY." << endl;
+			cout << "ERROR IN MEMORY STORAGE. RC: " << rc << endl;
+		}
 	
-	rc = loadFromMem();
-	if(rc != 0)
-	{
-		cout << "ERROR IN MEMORY." << endl;
-		cout << "ERROR IN MEMORY RETRIEVAL. RC: " << rc << endl;
+		rc = loadFromMem();
+		if(rc != 0)
+		{
+			cout << "ERROR IN MEMORY." << endl;
+			cout << "ERROR IN MEMORY RETRIEVAL. RC: " << rc << endl;
+		}
 	}
 }
