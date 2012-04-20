@@ -8,13 +8,15 @@ using namespace std;
 
 extern vector<MEMSlot> Regs;
 extern string tmpWReg;
+extern int doJ;
+extern string jumpLoc;
 
 ID::ID(void)
 {
 	instruction = "";
 	PCin = "";
 	NOP = 0;
-	PCout = "FAIL";
+	PCout = "";
 	RSVal = "";
 	RTVal = "";
 	signExtendedImmediate = "";
@@ -24,7 +26,7 @@ ID::ID(void)
 
 int ID::doJump(void)
 {
-	if(control[11] == '0')
+	if(control[10] == '0')
 	{
 		PCout = PCin;
 		return 0;
@@ -40,6 +42,11 @@ int ID::doJump(void)
 	//Then, copy the first 3 bits of the PC
 	PCout = PCin.substr(0, 3);
 	PCout += tmpPC;
+
+	cout << endl << endl << endl << endl << "NEW INTENDED PC: " << PCout << endl << endl << endl << endl;
+
+	doJ = 2;
+	jumpLoc = PCout;
 	
 	return 0;
 }
@@ -154,10 +161,10 @@ int ID::signExtendImmediate(void)
 		return -1;
 		
 	string SEImmediate = "";
-	if(immediate.at(0) == '0')
+	//if(immediate.at(0) == '0')
 		SEImmediate = "0000000000";
-	if(immediate.at(0) == '1')
-		SEImmediate = "1111111111";
+	//if(immediate.at(0) == '1')
+		//SEImmediate = "1111111111";
 	SEImmediate += immediate;
 	
 	signExtendedImmediate = SEImmediate;

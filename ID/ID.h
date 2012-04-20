@@ -32,6 +32,7 @@ class ID
 		string getRTVal(void) {return RTVal;}
 		string getSignExtendedImmediate(void) {return signExtendedImmediate;}
 		string getControl(void) {return control;}
+		string getPCin(void) {return PCin;}
 		bool getNOP(void) {return NOP;}
 		void setNOP(bool a) {NOP = a;}
 		void setInstruction(string a) {instruction = a;}

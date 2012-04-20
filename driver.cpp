@@ -30,6 +30,11 @@ int cycle;
 
 int NOPctr;
 
+int doBr;
+int doJ;
+string branchLoc;
+string jumpLoc;
+
 int main()
 {
 	//CODE HERE TO CONVERT ASM TO BINARY
@@ -42,6 +47,10 @@ int main()
 	BANDWIDTH = 16;
 	cycle = 1;
 	NOPctr = 0;
+	doBr = 0;
+	doJ = 0;
+	branchLoc = "";
+	jumpLoc = "";
 
 	//INITIALIZE DMEM
 	for(int i = 4096; i < 65536; i = i + 2)
@@ -236,7 +245,10 @@ int main()
 	WB* dWB = new WB();
 
 	//TEST IMEM
-	for(int i = 0; i < 44; i++)
+	cout << endl << endl << "--------------------------------------" << endl;
+	cout << "                IMEM" << endl;
+	cout << "--------------------------------------" << endl << endl;
+	for(int i = 0; i < 23; i++)
 	{
 		cout << IMEM[i].data << endl;
 	}
@@ -352,16 +364,23 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	cout << "IF/ID NOP value: " << dIF->getNOP() << endl << endl;
 
 	//Set IF Inputs
-	dIF->setPC(itob(currentPC,16));
-	if(cycle != 1)
+	if((doBr == 0) && (doJ == 0))
+		dIF->setPC(itob(currentPC,16));
+	if((cycle != 1) && (doBr == 0) && (doJ == 0))
 		dIF->setPC(dIF->getIncPC());
-	if(dEX->getPCout() != dEX->getPCin())
-		dIF->setPC(dEX->getPCout());
-	if(dID->getPCout() != dID->getPCin())
-		dIF->setPC(dEX->getPCout());
+	if(doBr > 0)
+	{
+		dIF->setPC(branchLoc);
+		doBr--;
+	}
+	if(doJ > 0)
+	{
+		dIF->setPC(jumpLoc);
+		doJ--;
+	}
 
 	//Output Finalization
-	cout << "PC incoming to IF phase: " << dIF->getIncPC() << endl << endl;
+	cout << "PC incoming to IF phase: " << dIF->getPC() << endl << endl;
 	cout << endl << endl;	
 
 	//Shift Regs MEM
