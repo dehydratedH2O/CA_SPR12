@@ -20,6 +20,7 @@ class WB
 		
 		//Gets and Sets
 		bool getNOP(void) {return NOP;}
+		string getALUResult(void) {return ALUResult;}
 		void setNOP(bool a) {NOP = a;}
 		void setMemOut(string a) {MemOut = a;}
 		void setALUResult(string a) {ALUResult = a;}

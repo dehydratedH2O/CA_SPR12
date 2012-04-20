@@ -1,42 +1,19 @@
 ori $r0,$r0,4
-nop
-nop
 add $r1,$r0,$r1
-nop
-nop
 sub $r1,$r1,$r1
-nop
-nop
 slt $r2,$r1,$r0
-nop
-nop
 sgt $r3,$r0,$r1
-nop
-nop
 sle $r4,$r1,$r0
-nop
-nop
 sge $r5,$r0,$r1
-nop
-nop
 and $r6,$r0,$r0
-nop
-nop
 and $r1,$r7,$r1
 and $r2,$r7,$r2
 and $r3,$r7,$r3
 and $r4,$r7,$r4
 and $r5,$r7,$r5
 and $r6,$r7,$r6
-nop
-nop
 or $r1,$r0,$r7
-nop
-nop
-andi $r2,$r2,5
-nop
-nop
-sw $r0,0($r0)
-nop
-nop
-lw $r4,0($r0)
+andi $r2,$r1,5
+sw $r0,$r0,0
+lw $r4,$r0,0
+j 18

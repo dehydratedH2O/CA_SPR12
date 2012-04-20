@@ -12,6 +12,7 @@ extern string branchLoc;
 extern vector<MEMSlot> Regs;
 extern string stuffFromMemory;
 extern string stuffFromExecute;
+extern string stuffFromWriteBack;
 
 EX::EX(void)
 {
@@ -251,6 +252,7 @@ void EX::hazardCheck(void)
 	string RTloc = "";
 	string MEMRegLoc = "";
 	string EXRegLoc = "";
+	string WBRegLoc = "";
 	
 	if (control[1] == '1')
 		iType = true;
@@ -268,13 +270,21 @@ void EX::hazardCheck(void)
 		RTloc = instruction.substr(10,3);
 	}
 
+	WBRegLoc = Regs[11].data;
 	MEMRegLoc = Regs[10].data;
 	EXRegLoc = Regs[9].data;
-
+	
+	if(RSloc == WBRegLoc)
+		RSVal = stuffFromWriteBack;
 	if(RSloc == MEMRegLoc)
 		RSVal = stuffFromMemory;
 	if(RSloc == EXRegLoc)
+	{
+		cout << endl<<endl<<endl << stuffFromExecute<<endl<<endl<<endl;
 		RSVal = stuffFromExecute;
+	}
+	if(RTloc == WBRegLoc)
+		RTVal = stuffFromWriteBack;
 	if(RTloc == MEMRegLoc)
 		RTVal = stuffFromMemory;
 	if(RTloc == EXRegLoc)

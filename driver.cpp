@@ -39,6 +39,7 @@ string branchLoc;
 string jumpLoc;
 string stuffFromMemory;
 string stuffFromExecute;
+string stuffFromWriteBack;
 
 int main()
 {
@@ -58,6 +59,7 @@ int main()
 	jumpLoc = "";
 	stuffFromMemory = "";
 	stuffFromExecute = "";
+	stuffFromWriteBack = "";
 
 	//INITIALIZE DMEM
 	for(int i = 4096; i < 65536; i = i + 2)
@@ -255,7 +257,7 @@ int main()
 	cout << endl << endl << "--------------------------------------" << endl;
 	cout << "                IMEM" << endl;
 	cout << "--------------------------------------" << endl << endl;
-	for(int i = 0; i < 23; i++)
+	for(int i = 0; i < IMEM.size(); i++)
 	{
 		cout << IMEM[i].data << endl;
 	}
@@ -297,7 +299,7 @@ int main()
 			cout << endl << endl << "--------------------------------------" << endl;
 			cout << "                IMEM" << endl;
 			cout << "--------------------------------------" << endl << endl;
-			for(int i = 0; i < 23; i++)
+			for(int i = 0; i < IMEM.size(); i++)
 			{
 				cout << IMEM[i].data << endl;
 			}
@@ -306,9 +308,9 @@ int main()
 			cout << endl << endl << "--------------------------------------" << endl;
 			cout << "                DMEM" << endl;
 			cout << "--------------------------------------" << endl << endl;
-			for(int i = 4096; i < 5000; i = i + 2)
+			for(int i = 0; i < 1000; i++)
 			{
-				cout << DMEM[i-4096].data << ",";
+				cout << DMEM[i].data << ",";
 			}
 		#endif
 		//---------------------------------------------------------------------------------
@@ -350,6 +352,7 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	else dIF->setNOP(0);
 
 	//Data Forwarding
+	stuffFromWriteBack = dWB->getALUResult();
 	stuffFromMemory = dMEM->getMemOut();
 	stuffFromExecute = dEX->getALUResult();
 
@@ -436,6 +439,7 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	cout << endl << endl;	
 
 	//Shift Regs MEM
+	Regs[11].data = Regs[10].data;
 	Regs[10].data = Regs[9].data;
 	Regs[9].data = Regs[8].data;
 	Regs[8].data = tmpWReg;

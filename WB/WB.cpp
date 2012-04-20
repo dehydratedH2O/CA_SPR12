@@ -6,6 +6,7 @@
 
 using namespace std;
 
+extern string stuffFromWriteBack;
 extern vector<MEMSlot> Regs;
 
 WB::WB(void)
