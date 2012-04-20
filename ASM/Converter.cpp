@@ -80,7 +80,7 @@ int Converter::parseInput(string filepath)
     }
     catch (ifstream::failure e)
     {
-        cout << "error opening/reading file" << endl;
+        //cout << "error opening/reading file" << endl;
     }
 
 	fin.close();
@@ -103,7 +103,7 @@ int Converter::convertToMachine(void)
     if (opcode == "nop")
     {
         opcode = "and";
-        operands = "$r0,$r0,$r0";
+        operands = " $r0,$r0,$r0";
     } else {
 	    currPos = nextPos;
 	    nextPos = asmCode[i].length();//asmCode[i].find_first_of(" ",currPos);
