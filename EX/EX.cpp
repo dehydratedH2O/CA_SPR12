@@ -229,7 +229,7 @@ int EX::doBranch(void)
         lo7 = lo7.substr(0,7);
         hi9.append(lo7);
         PCout = hi9;
-	doBr = 3;
+	doBr = 2;
 	branchLoc = PCout;
     }
     else

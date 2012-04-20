@@ -3,7 +3,7 @@ andi $r0,$r0,0
 andi $r0,$r0,0
 andi $r0,$r0,0
 andi $r0,$r0,0
-j 15
+beq $r0,$r0,0
 andi $r0,$r0,63
 andi $r0,$r0,63
 andi $r0,$r0,63
