@@ -100,20 +100,19 @@ int Converter::convertToMachine(void)
 	currPos = 0;
 	nextPos = asmCode[i].find_first_of(" ",currPos);
         opcode = asmCode[i].substr(currPos,nextPos-currPos);
-	currPos = nextPos;
-	nextPos = asmCode[i].length();//asmCode[i].find_first_of(" ",currPos);
+    if (opcode == "nop")
+    {
+        opcode = "and";
+        operands = "$r0,$r0,$r0";
+    } else {
+	    currPos = nextPos;
+	    nextPos = asmCode[i].length();//asmCode[i].find_first_of(" ",currPos);
         operands = asmCode[i].substr(currPos,nextPos-currPos);
+    }
         binary = "";
         cout << "found opcode " << opcode << " with operands " << operands << endl;
 
-        if (opcode == "nop")
-        {
-            binary.append("0001"); //just and it with itself
-            type = 'R';
-            func = "000";
-            operands = "$r0,$r0,$r0";
-        }
-        else if(opcode == "add")
+        if(opcode == "add")
                 {
 		binary.append("0000"); //append opcode to binary
                 type = 'R';
