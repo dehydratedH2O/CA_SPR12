@@ -20,6 +20,7 @@ class ID
 		
 		//Both
 		string control;
+		bool NOP;
 		
 	public:
 		//Constructor
@@ -31,6 +32,8 @@ class ID
 		string getRTVal(void) {return RTVal;}
 		string getSignExtendedImmediate(void) {return signExtendedImmediate;}
 		string getControl(void) {return control;}
+		bool getNOP(void) {return NOP;}
+		void setNOP(bool a) {NOP = a;}
 		void setInstruction(string a) {instruction = a;}
 		void setPCin(string a) {PCin = a;}
 		void setControl(string a) {control = a;}

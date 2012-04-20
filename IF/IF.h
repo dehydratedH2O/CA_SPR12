@@ -15,6 +15,7 @@ class IF
 		string incPC;
 		string instruction;
 		string control;
+		bool NOP;
 		
 	public:
 		//Constructor
@@ -24,11 +25,14 @@ class IF
 		string getIncPC(void) {return incPC;}
 		string getInstruction(void) {return instruction;}
 		string getControl(void) {return control;}
+		bool getNOP(void) {return NOP;}
+		void setNOP(bool a) {NOP = a;}	
 		void setPC(string a) {PC = a;}
 		
 		//Functions
 		int fetchInstruction(void);
 		int incrementPC(void);
+		void calcNOPs(void);
 		void perform(void);
 		int determineControlSignals(void);
 };

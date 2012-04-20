@@ -21,6 +21,7 @@ class EX
 		
 		//Both
 		string control;
+		bool NOP;
 
 	public:
 		//Contructor
@@ -31,6 +32,8 @@ class EX
 		string getPCout(void) {return PCout;}
 		string getControl(void) {return control;}
 		string getRTVal(void) {return RTVal;}
+		bool getNOP(void) {return NOP;}
+		void setNOP(bool a) {NOP = a;}
 		void setRSVal(string a) {RSVal = a;}
 		void setRTVal(string a) {RTVal = a;}
 		void setSignExtendedImmediate(string a) {signExtendedImmediate = a;}
