@@ -15,6 +15,7 @@
 using namespace std;
 
 #define OUTPUT_MEMORY
+#define OUTPUT_REGS
 
 int currentPC;
 
@@ -280,6 +281,17 @@ int main()
 		//------------------------------- MEMORY OUTPUT TESTING ---------------------------
 		//---------------------------------------------------------------------------------
 		//---------------------------------------------------------------------------------
+		#ifdef OUTPUT_REGS
+			//TEST REGS
+			cout << endl << endl << "--------------------------------------" << endl;
+			cout << "                REGS" << endl;
+			cout << "--------------------------------------" << endl << endl;
+			for(int i = 0; i < 11; i++)
+			{
+				cout << Regs[i].data << endl;
+			}
+		#endif
+		
 		#ifdef OUTPUT_MEMORY
 			//TEST IMEM
 			cout << endl << endl << "--------------------------------------" << endl;
