@@ -14,7 +14,7 @@ ID::ID(void)
 	instruction = "";
 	PCin = "";
 	NOP = 0;
-	PCout = "";
+	PCout = "FAIL";
 	RSVal = "";
 	RTVal = "";
 	signExtendedImmediate = "";
@@ -25,7 +25,11 @@ ID::ID(void)
 int ID::doJump(void)
 {
 	if(control[11] == '0')
+	{
+		PCout = PCin;
 		return 0;
+	}
+
 	
 	//First, extract address from instruction
 	string tmpPC = instruction.substr(4, 12);

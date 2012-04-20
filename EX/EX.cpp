@@ -13,7 +13,7 @@ EX::EX(void)
 	PCin = "";
 	NOP = 0;
 	ALUResult = "";
-	PCout = "";
+	PCout = "FAIL";
 	
 	control = "";
 }

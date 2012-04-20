@@ -355,6 +355,10 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	dIF->setPC(itob(currentPC,16));
 	if(cycle != 1)
 		dIF->setPC(dIF->getIncPC());
+	if(dEX->getPCout() != dEX->getPCin())
+		dIF->setPC(dEX->getPCout());
+	if(dID->getPCout() != dID->getPCin())
+		dIF->setPC(dEX->getPCout());
 
 	//Output Finalization
 	cout << "PC incoming to IF phase: " << dIF->getIncPC() << endl << endl;
