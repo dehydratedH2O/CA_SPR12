@@ -225,6 +225,6 @@ int EX::doBranch(void)
         PCout = hi9;
     }
     else
-        PCout = PCin;
+        PCout = "FAIL";
     return 0;
 }
