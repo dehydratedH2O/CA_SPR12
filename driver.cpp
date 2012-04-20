@@ -14,6 +14,8 @@
 
 using namespace std;
 
+#define OUTPUT_MEMORY
+
 int currentPC;
 
 void transfer(IF*,ID*,EX*,MEM*,WB*);
@@ -34,6 +36,8 @@ int doBr;
 int doJ;
 string branchLoc;
 string jumpLoc;
+string stuffFromMemory;
+string stuffFromExecute;
 
 int main()
 {
@@ -51,6 +55,8 @@ int main()
 	doJ = 0;
 	branchLoc = "";
 	jumpLoc = "";
+	stuffFromMemory = "";
+	stuffFromExecute = "";
 
 	//INITIALIZE DMEM
 	for(int i = 4096; i < 65536; i = i + 2)
@@ -269,6 +275,35 @@ int main()
 	
 		transfer(dIF, dID, dEX, dMEM, dWB);
 
+		//---------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------
+		//------------------------------- MEMORY OUTPUT TESTING ---------------------------
+		//---------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------
+		#ifdef OUTPUT_MEMORY
+			//TEST IMEM
+			cout << endl << endl << "--------------------------------------" << endl;
+			cout << "                IMEM" << endl;
+			cout << "--------------------------------------" << endl << endl;
+			for(int i = 0; i < 23; i++)
+			{
+				cout << IMEM[i].data << endl;
+			}
+
+			//TEST DMEM
+			cout << endl << endl << "--------------------------------------" << endl;
+			cout << "                DMEM" << endl;
+			cout << "--------------------------------------" << endl << endl;
+			for(int i = 4096; i < 5000; i = i + 2)
+			{
+				cout << DMEM[i-4096].data << ",";
+			}
+		#endif
+		//---------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------
+
 		cout << "Type and press ENTER to continue.";
 		//cin >> a;
 		cin.ignore();
@@ -301,7 +336,10 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 		NOPctr--;
 	}
 	else dIF->setNOP(0);
-	
+
+	//Data Forwarding
+	stuffFromMemory = dMEM->getMemOut();
+	stuffFromExecute = dEX->getALUResult();
 
 	//Set WB Inputs
 	dWB->setMemOut(dMEM->getMemOut());
@@ -338,6 +376,7 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	dEX->setPCin(dID->getPCout());
 	dEX->setControl(dID->getControl());
 	dEX->setNOP(dID->getNOP());
+	dEX->setInstruction(dID->getInstruction());
 
 	//Output ID/EX Buffer
 	cout << "ID/EX Buffer" << endl;
@@ -347,6 +386,7 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	cout << "Sign Extended Immediate: " << dID->getSignExtendedImmediate() << endl;
 	cout << "PC: " << dID->getPCout() << endl;
 	cout << "Control Signals: " << dID->getControl() << endl;
+	cout << "Instruction: " << dID->getInstruction() << endl;
 	cout << "ID/EX NOP value: " << dID->getNOP() << endl << endl;
 	
 	//Set ID Inputs

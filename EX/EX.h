@@ -10,6 +10,7 @@ class EX
 {
 	private:
 		//Inputs
+		string instruction;
 		string RSVal;
 		string RTVal;
 		string signExtendedImmediate;
@@ -40,11 +41,13 @@ class EX
 		void setSignExtendedImmediate(string a) {signExtendedImmediate = a;}
 		void setPCin(string a) {PCin = a;}
 		void setControl(string a) {control = a;}
+		void setInstruction(string a) {instruction = a;}
 		
 		//Functions
 		int doBranch(void);
 		int ALUCompute(void);
 		void perform(void);
+		void hazardCheck(void);
 };
 
 #endif

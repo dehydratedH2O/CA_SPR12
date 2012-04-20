@@ -1,12 +1,17 @@
 #include <string>
 #include <iostream>
+#include <vector>
 #include "EX.h"
 #include "../UTIL/utils.h"
+#include "../UTIL/MEMSlot.h"
 
 using namespace std;
 
 extern int doBr;
 extern string branchLoc;
+extern vector<MEMSlot> Regs;
+extern string stuffFromMemory;
+extern string stuffFromExecute;
 
 EX::EX(void)
 {
@@ -25,6 +30,8 @@ void EX::perform(void)
 {
     	if(NOP == 0)
 	{
+		hazardCheck();		
+
 		int rc;
 		rc = ALUCompute();
 		if(rc == -1)
@@ -235,4 +242,41 @@ int EX::doBranch(void)
     else
         PCout = PCin;
     return 0;
+}
+
+void EX::hazardCheck(void)
+{
+	bool iType, rType;
+	string RSloc = "";
+	string RTloc = "";
+	string MEMRegLoc = "";
+	string EXRegLoc = "";
+	
+	if (control[1] == '1')
+		iType = true;
+	else
+		rType = true;
+
+	if(iType)
+	{
+		RSloc = instruction.substr(4,3);
+		RTloc = instruction.substr(7,3);
+	}
+	if(rType)
+	{
+		RSloc = instruction.substr(7,3);
+		RTloc = instruction.substr(10,3);
+	}
+
+	MEMRegLoc = Regs[10].data;
+	EXRegLoc = Regs[9].data;
+
+	if(RSloc == MEMRegLoc)
+		RSVal = stuffFromMemory;
+	if(RSloc == EXRegLoc)
+		RSVal = stuffFromExecute;
+	if(RTloc == MEMRegLoc)
+		RTVal = stuffFromMemory;
+	if(RTloc == EXRegLoc)
+		RTVal = stuffFromExecute;
 }

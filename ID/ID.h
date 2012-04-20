@@ -9,7 +9,6 @@ class ID
 {
 	private:
 		//Inputs
-		string instruction;
 		string PCin;
 		
 		//Outputs
@@ -20,6 +19,7 @@ class ID
 		
 		//Both
 		string control;
+		string instruction;
 		bool NOP;
 		
 	public:
@@ -33,6 +33,7 @@ class ID
 		string getSignExtendedImmediate(void) {return signExtendedImmediate;}
 		string getControl(void) {return control;}
 		string getPCin(void) {return PCin;}
+		string getInstruction(void) {return instruction;}
 		bool getNOP(void) {return NOP;}
 		void setNOP(bool a) {NOP = a;}
 		void setInstruction(string a) {instruction = a;}
