@@ -200,9 +200,9 @@ int IF::determineControlSignals(void)
 	if(opcode == "1010")
 		controlSignals = "1110010000000";
 	if(opcode == "1011")
-		controlSignals = "1110011011000";
+		controlSignals = "1110011001000";
 	if(opcode == "1100")
-		controlSignals = "0110100100000";
+		controlSignals = "0110100110000";
 	if(opcode == "1101")
 		controlSignals = "0000000000100";
 

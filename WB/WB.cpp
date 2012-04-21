@@ -20,6 +20,11 @@ WB::WB(void)
 int WB::setRegVals(void)
 {
 	string wVal = "";
+
+	if(control[0] == '0')
+		return 0;
+
+	cout << "WB controls: " << control << endl;
 	
 	if(control[10] /*MemToReg*/ == '1')
 	{

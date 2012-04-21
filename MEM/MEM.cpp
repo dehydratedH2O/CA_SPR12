@@ -74,11 +74,5 @@ void MEM::perform(void)
 			cout << "ERROR IN MEMORY." << endl;
 			cout << "ERROR IN MEMORY RETRIEVAL. RC: " << rc << endl;
 		}
-
-		/*if(MemOut == "")
-		{
-			cout << endl << ALUResult << endl;
-			MemOut = ALUResult;
-		}*/
 	}
 }

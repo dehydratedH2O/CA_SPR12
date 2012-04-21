@@ -13,6 +13,9 @@ extern vector<MEMSlot> Regs;
 extern string stuffFromMemory;
 extern string stuffFromExecute;
 extern string stuffFromWriteBack;
+extern bool EXnop;
+extern bool MEMnop;
+extern bool WBnop;
 
 EX::EX(void)
 {
@@ -29,6 +32,7 @@ EX::EX(void)
 
 void EX::perform(void)
 {
+	cout << "bcontrols b4 ex: " << control<<endl;
     	if(NOP == 0)
 	{
 		hazardCheck();		
@@ -40,7 +44,7 @@ void EX::perform(void)
 			cout << "ERROR IN EXECUTE." << endl;
 			cout << "ERROR IN ALU COMPUTATION." << endl;
 		}
-
+				
 		rc = doBranch();
 		if(rc == -1)
 		{
@@ -182,6 +186,7 @@ int EX::ALUCompute(void)
     }
     else if (ALUop == "01111")
     {
+	cout << "rsi: " << rsi << endl <<"rti" << rti << endl;
         //branch <=
         if (rsi <= rti)
             control[11] = '1';
@@ -229,16 +234,18 @@ int EX::ALUCompute(void)
 
 int EX::doBranch(void)
 {
-    if (control[11] == '1')
+	cout << "b controls: " <<control<< endl;    
+if (control[11] == '1')
     {
-        string hi9 = PCin.substr(0,9);
-        string lo7 = signExtendedImmediate.substr(8,7);
+        string hi9 = PCin.substr(0,8);
+        string lo7 = signExtendedImmediate.substr(9,7);
         lo7.append("0");
-        lo7 = lo7.substr(0,7);
+        //lo7 = lo7.substr(1,7);
         hi9.append(lo7);
         PCout = hi9;
-	doBr = 2;
+	doBr = 3;
 	branchLoc = PCout;
+	cout << "branchLoc " << branchLoc << endl;
     }
     else
         PCout = PCin;
@@ -280,32 +287,32 @@ void EX::hazardCheck(void)
 	cout <<"RTLOC: " << RTloc <<endl;
 	if(rType == true) cout << control << endl;
 	
-	if(RSloc == WBRegLoc)
+	if((RSloc == WBRegLoc) && (WBnop == false))
 	{
 		cout << endl << "Forwarding to RS: " << stuffFromWriteBack << " from WRITE BACK." << endl << endl << endl;
 		RSVal = stuffFromWriteBack;	
 	}
-	if(RSloc == MEMRegLoc)
+	if((RSloc == MEMRegLoc) && (MEMnop == false))
 	{
 		cout << endl << "Forwarding to RS: " << stuffFromMemory << " from MEMORY." << endl << endl << endl;
 		RSVal = stuffFromMemory;
 	}
-	if(RSloc == EXRegLoc)
+	if((RSloc == EXRegLoc) && (EXnop == false))
 	{
 		cout << endl << "Forwarding to RS: " << stuffFromExecute << " from EXECUTE." << endl << endl << endl;
 		RSVal = stuffFromExecute;
 	}
-	if(RTloc == WBRegLoc)
+	if((RTloc == WBRegLoc) && (WBnop == false))
 	{
 		cout << endl << "Forwarding to RT: " << stuffFromWriteBack << " from WRITE BACK." << endl << endl << endl;
 		RTVal = stuffFromWriteBack;
 	}	
-	if(RTloc == MEMRegLoc)
+	if((RTloc == MEMRegLoc) && (MEMnop == false))
 	{
 		cout << endl << "Forwarding to RT: " << stuffFromMemory << " from MEMORY." << endl << endl << endl;
 		RTVal = stuffFromMemory;
 	}	
-	if(RTloc == EXRegLoc)
+	if((RTloc == EXRegLoc) && (EXnop == false))
 	{
 		cout << endl << "Forwarding to RT: " << stuffFromExecute << " from EXECUTE." << endl << endl << endl;
 		RTVal = stuffFromExecute;

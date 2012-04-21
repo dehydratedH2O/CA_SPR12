@@ -14,7 +14,8 @@
 
 using namespace std;
 
-#define OUTPUT_MEMORY
+//#define OUTPUT_IMEM
+#define OUTPUT_DMEM
 #define OUTPUT_REGS
 
 int currentPC;
@@ -41,6 +42,10 @@ string stuffFromMemory;
 string stuffFromExecute;
 string stuffFromWriteBack;
 
+bool EXnop;
+bool MEMnop;
+bool WBnop;
+
 int main()
 {
 	//CODE HERE TO CONVERT ASM TO BINARY
@@ -60,6 +65,9 @@ int main()
 	stuffFromMemory = "";
 	stuffFromExecute = "";
 	stuffFromWriteBack = "";
+	EXnop = false;
+	MEMnop = false;
+	WBnop = false;
 
 	//INITIALIZE DMEM
 	for(int i = 0; i < 5000; i = i + 2)
@@ -295,7 +303,7 @@ int main()
 			}
 		#endif
 		
-		#ifdef OUTPUT_MEMORY
+		#ifdef OUTPUT_IMEM
 			//TEST IMEM
 			cout << endl << endl << "--------------------------------------" << endl;
 			cout << "                IMEM" << endl;
@@ -304,7 +312,9 @@ int main()
 			{
 				cout << IMEM[i].data << endl;
 			}
+		#endif
 
+		#ifdef OUTPUT_DMEM
 			//TEST DMEM
 			cout << endl << endl << "--------------------------------------" << endl;
 			cout << "                DMEM" << endl;
@@ -351,6 +361,17 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 		NOPctr--;
 	}
 	else dIF->setNOP(0);
+
+	//Set global nop bits
+	if(dEX->getNOP() == true)	
+		EXnop = true;
+	else EXnop = false;
+	if(dMEM->getNOP() == true)	
+		MEMnop = true;
+	else MEMnop = false;
+	if(dWB->getNOP() == true)	
+		WBnop = true;
+	else WBnop = false;
 
 	//Data Forwarding
 	stuffFromWriteBack = dWB->getALUResult();
