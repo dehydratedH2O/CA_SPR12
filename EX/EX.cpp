@@ -247,7 +247,7 @@ int EX::doBranch(void)
 
 void EX::hazardCheck(void)
 {
-	bool iType, rType;
+	bool iType = false, rType = false;
 	string RSloc = "";
 	string RTloc = "";
 	string MEMRegLoc = "";
@@ -273,6 +273,12 @@ void EX::hazardCheck(void)
 	WBRegLoc = Regs[11].data;
 	MEMRegLoc = Regs[10].data;
 	EXRegLoc = Regs[9].data;
+
+	cout << "instruction: " << instruction << endl << endl;
+
+	cout << "RSLOC: " << RSloc <<endl;
+	cout <<"RTLOC: " << RTloc <<endl;
+	if(rType == true) cout << control << endl;
 	
 	if(RSloc == WBRegLoc)
 	{
@@ -291,12 +297,12 @@ void EX::hazardCheck(void)
 	}
 	if(RTloc == WBRegLoc)
 	{
-		cout << endl << "Forwarding to RT: " << stuffFromExecute << " from WRITE BACK." << endl << endl << endl;
+		cout << endl << "Forwarding to RT: " << stuffFromWriteBack << " from WRITE BACK." << endl << endl << endl;
 		RTVal = stuffFromWriteBack;
 	}	
 	if(RTloc == MEMRegLoc)
 	{
-		cout << endl << "Forwarding to RT: " << stuffFromExecute << " from MEMORY." << endl << endl << endl;
+		cout << endl << "Forwarding to RT: " << stuffFromMemory << " from MEMORY." << endl << endl << endl;
 		RTVal = stuffFromMemory;
 	}	
 	if(RTloc == EXRegLoc)

@@ -354,7 +354,9 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 
 	//Data Forwarding
 	stuffFromWriteBack = dWB->getALUResult();
-	stuffFromMemory = dMEM->getMemOut();
+	if(dMEM->getControl()[9] == '1')
+		stuffFromMemory = dMEM->getMemOut();
+	else stuffFromMemory = dMEM->getALUResult();
 	stuffFromExecute = dEX->getALUResult();
 
 	//Set WB Inputs
