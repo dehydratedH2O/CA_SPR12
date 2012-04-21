@@ -62,14 +62,15 @@ int main()
 	stuffFromWriteBack = "";
 
 	//INITIALIZE DMEM
-	for(int i = 4096; i < 65536; i = i + 2)
+	for(int i = 0; i < 5000; i = i + 2)
 	{
 		int tmp = i;
 		MEMSlot a;
 		a.location = "0";
 		a.data = "0";
 		string loc = "";
-		
+		loc = itob(i,16);
+		/*
 		if(tmp >= 32768)
 		{
 			tmp = tmp - 32768;
@@ -173,7 +174,7 @@ int main()
 			tmp = tmp - 2;
 			loc += "1";
 		}
-		else loc += "0";
+		else loc += "0";*/
 		
 		a.location = loc;
 		DMEM.push_back(a);
