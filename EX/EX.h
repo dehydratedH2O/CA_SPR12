@@ -33,7 +33,6 @@ class EX
 		string getPCout(void) {return PCout;}
 		string getControl(void) {return control;}
 		string getRTVal(void) {return RTVal;}
-		string getRSVal(void) {return RSVal;}
 		string getPCin(void) {return PCin;}
 		bool getNOP(void) {return NOP;}
 		void setNOP(bool a) {NOP = a;}

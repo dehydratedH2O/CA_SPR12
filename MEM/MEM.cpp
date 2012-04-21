@@ -12,7 +12,6 @@ MEM::MEM(void)
 {
 	NOP = 0;	
 	RTVal = "";
-	RSVal = "";
 	
 	MemOut = "";
 	
@@ -28,8 +27,6 @@ int MEM::storeToMem(void)
 	if(DMEM.size() == 0)
 		return -1;
 
-	cout << endl << endl << endl << "HERE IS THE VALUE WE WANT TO BE EQUAL TO LOCATION: " << ALUResult << endl << endl << endl;
-	cout << "HERE IS THE ACTUAL VALUE OF THAT LOCATION: " << DMEM[3].location << endl << endl << endl;
 	for(int i = 0; i < DMEM.size(); i++)
 	{
 		if(DMEM[i].location == ALUResult)
