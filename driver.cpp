@@ -62,16 +62,15 @@ int main()
 	stuffFromWriteBack = "";
 
 	//INITIALIZE DMEM
-	for(int i = 0; i < 5000; i = i + 2)
+	for(int i = 4096; i < 65536; i = i + 2)
 	{
 		int tmp = i;
 		MEMSlot a;
 		a.location = "0";
 		a.data = "0";
 		string loc = "";
-		loc = itob(i,16);
 		
-		/*if(tmp >= 32768)
+		if(tmp >= 32768)
 		{
 			tmp = tmp - 32768;
 			loc += "1";
@@ -174,7 +173,7 @@ int main()
 			tmp = tmp - 2;
 			loc += "1";
 		}
-		else loc += "0";*/
+		else loc += "0";
 		
 		a.location = loc;
 		DMEM.push_back(a);
@@ -262,7 +261,6 @@ int main()
 	{
 		cout << IMEM[i].data << endl;
 	}
-	cout << endl <<  endl;
 	
 	string a = "";
 	while(currentPC < MAXMEM)
@@ -320,7 +318,7 @@ int main()
 		//---------------------------------------------------------------------------------
 		//---------------------------------------------------------------------------------
 
-		cout << endl << endl << "Type and press ENTER to continue.";
+		cout << "Type and press ENTER to continue.";
 		//cin >> a;
 		cin.ignore();
 		cout << endl << endl << endl << endl;
@@ -375,7 +373,6 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	//Set MEM Inputs
 	dMEM->setALUResult(dEX->getALUResult());
 	dMEM->setRTVal(dEX->getRTVal());
-	dMEM->setRSVal(dEX->getRSVal());
 	dMEM->setControl(dEX->getControl());
 	dMEM->setNOP(dEX->getNOP());
 
@@ -383,7 +380,6 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	cout << "EX/MEM Buffer" << endl;
 	cout << "-------------" << endl;
 	cout << "ALUResult: " << dEX->getALUResult() << endl;
-	cout << "Rs Value: " << dEX->getRSVal() << endl;
 	cout << "Rt Value: " << dEX->getRTVal() << endl;
 	cout << "Control Signals: " << dEX->getControl() << endl;
 	cout << "EX/MEM NOP value: " << dEX->getNOP() << endl << endl;
