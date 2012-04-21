@@ -55,13 +55,13 @@ int ID::getRegistersFromFile(void)
 {
 	if(instruction.length() != 16)
 		return -1;
-
-	tmpWReg = instruction.substr(4, 3);
-	
-	//CODE GOES HERE TO GET REGISTERS FROM FILE
 	
 	string opcode = instruction.substr(0, 4);
 	string rs, rt;
+
+	if((opcode == "1010") || (opcode == "1001"))
+	tmpWReg = instruction.substr(7,3);
+	else tmpWReg = instruction.substr(4, 3);
 	
 	// R-type
 	if((opcode == "0000") || (opcode == "0001"))

@@ -290,7 +290,7 @@ int main()
 			cout << endl << endl << "--------------------------------------" << endl;
 			cout << "                REGS" << endl;
 			cout << "--------------------------------------" << endl << endl;
-			for(int i = 0; i < 11; i++)
+			for(int i = 0; i < 12; i++)
 			{
 				cout << Regs[i].data << endl;
 			}

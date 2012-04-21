@@ -275,18 +275,33 @@ void EX::hazardCheck(void)
 	EXRegLoc = Regs[9].data;
 	
 	if(RSloc == WBRegLoc)
-		RSVal = stuffFromWriteBack;
+	{
+		cout << endl << "Forwarding to RS: " << stuffFromWriteBack << " from WRITE BACK." << endl << endl << endl;
+		RSVal = stuffFromWriteBack;	
+	}
 	if(RSloc == MEMRegLoc)
+	{
+		cout << endl << "Forwarding to RS: " << stuffFromMemory << " from MEMORY." << endl << endl << endl;
 		RSVal = stuffFromMemory;
+	}
 	if(RSloc == EXRegLoc)
 	{
-		cout << endl<<endl<<endl << stuffFromExecute<<endl<<endl<<endl;
+		cout << endl << "Forwarding to RS: " << stuffFromExecute << " from EXECUTE." << endl << endl << endl;
 		RSVal = stuffFromExecute;
 	}
 	if(RTloc == WBRegLoc)
+	{
+		cout << endl << "Forwarding to RT: " << stuffFromExecute << " from WRITE BACK." << endl << endl << endl;
 		RTVal = stuffFromWriteBack;
+	}	
 	if(RTloc == MEMRegLoc)
+	{
+		cout << endl << "Forwarding to RT: " << stuffFromExecute << " from MEMORY." << endl << endl << endl;
 		RTVal = stuffFromMemory;
+	}	
 	if(RTloc == EXRegLoc)
+	{
+		cout << endl << "Forwarding to RT: " << stuffFromExecute << " from EXECUTE." << endl << endl << endl;
 		RTVal = stuffFromExecute;
+	}
 }
