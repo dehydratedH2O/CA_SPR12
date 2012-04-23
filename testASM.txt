@@ -1,6 +1,14 @@
-ori $r7,$r7,1
-add $r0,$r0,$r7
-add $r0,$r0,$r7
-add $r0,$r0,$r7
-j 1
+ori $r0,$r0,6
+ori $r1,$r1,4
+ori $r2,$r2,9
+sw $r0,$r7,4
+sw $r1,$r7,8
+sw $r2,$r7,12
+lw $r3,$r7,4
+nop
+lw $r4,$r7,8
+nop
+lw $r5,$r7,12
+nop
+j 12
 nop

@@ -219,12 +219,12 @@ int EX::ALUCompute(void)
     else if (ALUop == "10011")
     {
         //load word
-        result = rsi + immi;
+        result = rti + immi;
     }
     else if (ALUop == "10100")
     {
         //store word
-        result = rsi + immi;
+        result = rti + immi;
     }
     else
     {

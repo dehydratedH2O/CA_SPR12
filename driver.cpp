@@ -15,7 +15,7 @@
 using namespace std;
 
 //#define OUTPUT_IMEM
-//#define OUTPUT_DMEM
+#define OUTPUT_DMEM
 #define OUTPUT_REGS
 
 int currentPC;
@@ -325,9 +325,9 @@ int main()
 			cout << endl << endl << "--------------------------------------" << endl;
 			cout << "                DMEM" << endl;
 			cout << "--------------------------------------" << endl << endl;
-			for(int i = 0; i < 1000; i++)
+			for(int i = 0; i < 20; i++)
 			{
-				cout << DMEM[i].data << ",";
+				cout << "LOC: " << DMEM[i].location << " : DATA : " << DMEM[i].data << endl;
 			}
 		#endif
 		//---------------------------------------------------------------------------------
@@ -406,6 +406,7 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	//Set MEM Inputs
 	dMEM->setALUResult(dEX->getALUResult());
 	dMEM->setRTVal(dEX->getRTVal());
+	dMEM->setRSVal(dEX->getRSVal());
 	dMEM->setControl(dEX->getControl());
 	dMEM->setNOP(dEX->getNOP());
 	dMEM->setInstruction(dEX->getInstruction());
@@ -416,6 +417,7 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	cout << "Instruction: " << dEX->getInstruction() << endl;
 	cout << "ALUResult: " << dEX->getALUResult() << endl;
 	cout << "Rt Value: " << dEX->getRTVal() << endl;
+	cout << "Rs Value: " << dEX->getRSVal() << endl;
 	cout << "Control Signals: " << dEX->getControl() << endl;
 	cout << "EX/MEM NOP value: " << dEX->getNOP() << endl << endl;
 	

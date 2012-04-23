@@ -26,7 +26,7 @@ int WB::setRegVals(void)
 
 	cout << "WB controls: " << control << endl;
 	
-	if(control[10] /*MemToReg*/ == '1')
+	if(control[9] /*MemToReg*/ == '1')
 	{
 		wVal = MemOut;
 	}

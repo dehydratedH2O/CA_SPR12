@@ -12,6 +12,7 @@ MEM::MEM(void)
 {
 	NOP = 0;	
 	RTVal = "";
+	RSVal = "";
 	
 	MemOut = "";
 	
@@ -31,7 +32,7 @@ int MEM::storeToMem(void)
 	{
 		if(DMEM[i].location == ALUResult)
 		{
-			DMEM[i].data = RTVal;
+			DMEM[i].data = RSVal;
 			return 0;
 		}
 	}

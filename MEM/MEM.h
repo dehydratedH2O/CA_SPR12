@@ -10,6 +10,7 @@ class MEM
 	private:
 		//Inputs
 		string RTVal;
+		string RSVal;
 		
 		//Outputs
 		string MemOut;
@@ -33,6 +34,7 @@ class MEM
 		bool getNOP(void) {return NOP;}
 		void setNOP(bool a) {NOP = a;}
 		void setRTVal(string a) {RTVal = a;}
+		void setRSVal(string a) {RSVal = a;}
 		void setControl(string a) {control = a;}
 		void setALUResult(string a) {ALUResult = a;}
 	
