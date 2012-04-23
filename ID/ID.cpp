@@ -8,7 +8,7 @@ using namespace std;
 
 extern vector<MEMSlot> Regs;
 extern string tmpWReg;
-extern int doJ;
+extern bool doJ;
 extern string jumpLoc;
 
 ID::ID(void)
@@ -45,7 +45,7 @@ int ID::doJump(void)
 
 	cout << endl << endl << endl << endl << "NEW INTENDED PC: " << PCout << endl << endl << endl << endl;
 
-	doJ = 2;
+	doJ = true;
 	jumpLoc = PCout;
 	
 	return 0;

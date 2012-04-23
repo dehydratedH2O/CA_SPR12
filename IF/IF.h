@@ -10,6 +10,9 @@ class IF
 	private:
 		//Inputs
 		string PC;
+
+		//Local
+		int NOPctr;
 		
 		//Outputs
 		string incPC;
@@ -26,6 +29,7 @@ class IF
 		string getInstruction(void) {return instruction;}
 		string getControl(void) {return control;}
 		string getPC(void) {return PC;}
+		int getNOPctr(void) {return NOPctr;}
 		bool getNOP(void) {return NOP;}
 		void setNOP(bool a) {NOP = a;}	
 		void setPC(string a) {PC = a;}

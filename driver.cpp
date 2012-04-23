@@ -15,7 +15,7 @@
 using namespace std;
 
 //#define OUTPUT_IMEM
-#define OUTPUT_DMEM
+//#define OUTPUT_DMEM
 #define OUTPUT_REGS
 
 int currentPC;
@@ -32,12 +32,12 @@ int MAXMEM, BANDWIDTH;
 
 int cycle;
 
-int NOPctr;
 
-int doBr;
-int doJ;
+bool doBr;
+bool doJ;
 string branchLoc;
 string jumpLoc;
+
 string stuffFromMemory;
 string stuffFromExecute;
 string stuffFromWriteBack;
@@ -45,6 +45,7 @@ string stuffFromWriteBack;
 bool EXnop;
 bool MEMnop;
 bool WBnop;
+
 
 int main()
 {
@@ -57,9 +58,8 @@ int main()
 	MAXMEM = 4096;
 	BANDWIDTH = 16;
 	cycle = 1;
-	NOPctr = 0;
-	doBr = 0;
-	doJ = 0;
+	/*doBr = 0;
+	doJ = 0;*/
 	branchLoc = "";
 	jumpLoc = "";
 	stuffFromMemory = "";
@@ -352,16 +352,8 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	cout << "             Cycle " << cycle << endl;
 	cout << "--------------------------------------" << endl << endl;
 	cycle++;
-	cout << "NOPctr: " << NOPctr << endl << endl;
-
-	//NOP Handling
-	if(NOPctr > 0) 
-	{
-		dIF->setNOP(1);
-		NOPctr--;
-	}
-	else dIF->setNOP(0);
-
+	cout << "NOPctr: " << dIF->getNOPctr() << endl << endl;
+	
 	//Set global nop bits
 	if(dEX->getNOP() == true)	
 		EXnop = true;
@@ -385,10 +377,12 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	dWB->setALUResult(dMEM->getALUResult());
 	dWB->setControl(dMEM->getControl());
 	dWB->setNOP(dMEM->getNOP());
+	dWB->setInstruction(dMEM->getInstruction());
 
 	//Output MEM/WB Buffer
 	cout << "MEM/WB Buffer" << endl;
 	cout << "-------------" << endl;
+	cout << "Instruction: " << dMEM->getInstruction() << endl;
 	cout << "Memory Output: " << dMEM->getMemOut() << endl;
 	cout << "ALU Result: " << dMEM->getALUResult() << endl;
 	cout << "Control Signals: " << dMEM->getControl() << endl;
@@ -399,10 +393,12 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	dMEM->setRTVal(dEX->getRTVal());
 	dMEM->setControl(dEX->getControl());
 	dMEM->setNOP(dEX->getNOP());
+	dMEM->setInstruction(dEX->getInstruction());
 
 	//Output EX/MEM Buffer
 	cout << "EX/MEM Buffer" << endl;
 	cout << "-------------" << endl;
+	cout << "Instruction: " << dEX->getInstruction() << endl;
 	cout << "ALUResult: " << dEX->getALUResult() << endl;
 	cout << "Rt Value: " << dEX->getRTVal() << endl;
 	cout << "Control Signals: " << dEX->getControl() << endl;
@@ -443,23 +439,26 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	cout << "IF/ID NOP value: " << dIF->getNOP() << endl << endl;
 
 	//Set IF Inputs
-	if((doBr == 0) && (doJ == 0))
-		dIF->setPC(itob(currentPC,16));
-	if((cycle != 1) && (doBr == 0) && (doJ == 0))
+	dIF->setPC("0000000000000000");
+	if(cycle != 1)
 		dIF->setPC(dIF->getIncPC());
-	if(doBr > 0)
+
+	if(doBr == true)
 	{
+		cout << endl << endl <<endl <<endl <<endl <<endl <<endl <<endl <<endl <<endl <<endl <<endl <<endl <<endl << endl;
 		dIF->setPC(branchLoc);
-		doBr--;
+		dIF->setNOP(0);
+		doBr = false;
 	}
-	if(doJ > 0)
+	if(doJ == true)
 	{
 		dIF->setPC(jumpLoc);
-		doJ--;
+		dIF->setNOP(0);
+		doJ = false;
 	}
 
 	//Output Finalization
-	cout << "PC incoming to IF phase: " << dIF->getPC() << endl << endl;
+	cout << "PC incoming to NEXT IF phase: " << dIF->getPC() << endl << endl;
 	cout << endl << endl;	
 
 	//Shift Regs MEM

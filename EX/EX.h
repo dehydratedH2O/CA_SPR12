@@ -34,6 +34,7 @@ class EX
 		string getControl(void) {return control;}
 		string getRTVal(void) {return RTVal;}
 		string getPCin(void) {return PCin;}
+		string getInstruction(void) {return instruction;}
 		bool getNOP(void) {return NOP;}
 		void setNOP(bool a) {NOP = a;}
 		void setRSVal(string a) {RSVal = a;}

@@ -17,6 +17,7 @@ class MEM
 		//Both
 		string ALUResult;
 		string control;
+		string instruction;
 		bool NOP;
 		
 	public:
@@ -27,6 +28,8 @@ class MEM
 		string getMemOut(void) {return MemOut;}
 		string getControl(void) {return control;}
 		string getALUResult(void) {return ALUResult;}
+		string getInstruction(void) {return instruction;}
+		void setInstruction(string a) {instruction = a;}
 		bool getNOP(void) {return NOP;}
 		void setNOP(bool a) {NOP = a;}
 		void setRTVal(string a) {RTVal = a;}

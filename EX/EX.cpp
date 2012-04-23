@@ -7,7 +7,7 @@
 
 using namespace std;
 
-extern int doBr;
+extern bool doBr;
 extern string branchLoc;
 extern vector<MEMSlot> Regs;
 extern string stuffFromMemory;
@@ -235,21 +235,21 @@ int EX::ALUCompute(void)
 int EX::doBranch(void)
 {
 	cout << "b controls: " <<control<< endl;    
-if (control[11] == '1')
-    {
-        string hi9 = PCin.substr(0,8);
-        string lo7 = signExtendedImmediate.substr(9,7);
-        lo7.append("0");
-        //lo7 = lo7.substr(1,7);
-        hi9.append(lo7);
-        PCout = hi9;
-	doBr = 3;
-	branchLoc = PCout;
-	cout << "branchLoc " << branchLoc << endl;
-    }
-    else
-        PCout = PCin;
-    return 0;
+	if (control[11] == '1')
+	{
+		string hi9 = PCin.substr(0,8);
+		string lo7 = signExtendedImmediate.substr(9,7);
+		lo7.append("0");
+		//lo7 = lo7.substr(1,7);
+		hi9.append(lo7);
+		PCout = hi9;
+		doBr = true;
+		branchLoc = PCout;
+		//cout << "branchLoc " << branchLoc << endl;
+	}
+    	else
+        	PCout = PCin;
+    	return 0;
 }
 
 void EX::hazardCheck(void)
