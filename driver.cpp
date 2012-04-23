@@ -81,7 +81,7 @@ int main()
 		int tmp = i;
 		MEMSlot a;
 		a.location = "0";
-		a.data = "0";
+		a.data = "0000000000000000";
 		string loc = "";
 		loc = itob(i,16);
 		/*
