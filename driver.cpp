@@ -45,6 +45,9 @@ string stuffFromWriteBack;
 bool EXnop;
 bool MEMnop;
 bool WBnop;
+bool EXjump;
+bool MEMjump;
+bool WBjump;
 
 
 int main()
@@ -68,6 +71,9 @@ int main()
 	EXnop = false;
 	MEMnop = false;
 	WBnop = false;
+	EXjump = false;
+	MEMjump = false;
+	WBjump = false;
 
 	//INITIALIZE DMEM
 	for(int i = 0; i < 5000; i = i + 2)
@@ -354,7 +360,7 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	cycle++;
 	cout << "NOPctr: " << dIF->getNOPctr() << endl << endl;
 	
-	//Set global nop bits
+	//Set global nop bits & jump bits
 	if(dEX->getNOP() == true)	
 		EXnop = true;
 	else EXnop = false;
@@ -364,6 +370,15 @@ void transfer(IF* dIF, ID* dID, EX* dEX, MEM* dMEM, WB* dWB)
 	if(dWB->getNOP() == true)	
 		WBnop = true;
 	else WBnop = false;
+	if(dEX->getInstruction().substr(0,4) == "1101")	
+		EXjump = true;
+	else EXjump = false;
+	if(dMEM->getInstruction().substr(0,4) == "1101")	
+		MEMjump = true;
+	else MEMjump = false;
+	if(dWB->getInstruction().substr(0,4) == "1101")	
+		WBjump = true;
+	else WBjump = false;
 
 	//Data Forwarding
 	stuffFromWriteBack = dWB->getALUResult();

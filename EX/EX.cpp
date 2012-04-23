@@ -16,6 +16,9 @@ extern string stuffFromWriteBack;
 extern bool EXnop;
 extern bool MEMnop;
 extern bool WBnop;
+extern bool EXjump;
+extern bool MEMjump;
+extern bool WBjump;
 
 EX::EX(void)
 {
@@ -276,6 +279,7 @@ void EX::hazardCheck(void)
 		RSloc = instruction.substr(7,3);
 		RTloc = instruction.substr(10,3);
 	}
+	
 
 	WBRegLoc = Regs[11].data;
 	MEMRegLoc = Regs[10].data;
@@ -287,32 +291,32 @@ void EX::hazardCheck(void)
 	cout <<"RTLOC: " << RTloc <<endl;
 	if(rType == true) cout << control << endl;
 	
-	if((RSloc == WBRegLoc) && (WBnop == false))
+	if((RSloc == WBRegLoc) && (WBnop == false) && (WBjump == false))
 	{
 		cout << endl << "Forwarding to RS: " << stuffFromWriteBack << " from WRITE BACK." << endl << endl << endl;
 		RSVal = stuffFromWriteBack;	
 	}
-	if((RSloc == MEMRegLoc) && (MEMnop == false))
+	if((RSloc == MEMRegLoc) && (MEMnop == false) && (MEMjump == false))
 	{
 		cout << endl << "Forwarding to RS: " << stuffFromMemory << " from MEMORY." << endl << endl << endl;
 		RSVal = stuffFromMemory;
 	}
-	if((RSloc == EXRegLoc) && (EXnop == false))
+	if((RSloc == EXRegLoc) && (EXnop == false) && (EXjump == false))
 	{
 		cout << endl << "Forwarding to RS: " << stuffFromExecute << " from EXECUTE." << endl << endl << endl;
 		RSVal = stuffFromExecute;
 	}
-	if((RTloc == WBRegLoc) && (WBnop == false))
+	if((RTloc == WBRegLoc) && (WBnop == false) && (WBjump == false))
 	{
 		cout << endl << "Forwarding to RT: " << stuffFromWriteBack << " from WRITE BACK." << endl << endl << endl;
 		RTVal = stuffFromWriteBack;
 	}	
-	if((RTloc == MEMRegLoc) && (MEMnop == false))
+	if((RTloc == MEMRegLoc) && (MEMnop == false) && (MEMjump == false))
 	{
 		cout << endl << "Forwarding to RT: " << stuffFromMemory << " from MEMORY." << endl << endl << endl;
 		RTVal = stuffFromMemory;
 	}	
-	if((RTloc == EXRegLoc) && (EXnop == false))
+	if((RTloc == EXRegLoc) && (EXnop == false) && (EXjump == false))
 	{
 		cout << endl << "Forwarding to RT: " << stuffFromExecute << " from EXECUTE." << endl << endl << endl;
 		RTVal = stuffFromExecute;
